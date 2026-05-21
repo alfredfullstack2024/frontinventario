@@ -5,7 +5,7 @@ export default function Inventario() {
   const [codigos, setCodigos] = useState([]);
   const [filtro, setFiltro] = useState("todos");
   const [busqueda, setBusqueda] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [codigoSeleccionado, setCodigoSeleccionado] = useState(null);
   const [mostrarModalSalida, setMostrarModalSalida] = useState(false);
   const [mostrarModalEntrada, setMostrarModalEntrada] = useState(false);
@@ -153,17 +153,7 @@ export default function Inventario() {
     return Math.ceil(diferencia / (1000 * 60 * 60 * 24));
   };
 
-  const obtenerColorSemaforo = (dias) => {
-    if (dias <= 15) {
-      return "danger";
-    }
-
-    if (dias <= 60) {
-      return "warning";
-    }
-
-    return "success";
-  };
+  
   const registrarSalida = async () => {
     try {
       if (!motivoSalida.trim()) {
