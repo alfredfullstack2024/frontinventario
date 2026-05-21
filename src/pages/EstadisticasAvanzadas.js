@@ -21,10 +21,7 @@ export default function EstadisticasAvanzadas() {
   const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-  cargarDatos();
-  cargarCategorias();
-}, [cargarDatos]);
+ 
 
   const cargarCategorias = async () => {
     try {
@@ -35,7 +32,7 @@ export default function EstadisticasAvanzadas() {
     }
   };
 
- const cargarDatos = useCallback(async () => {
+ const cargarDatos = async () => {
   try {
     setLoading(true);
 
@@ -60,7 +57,11 @@ export default function EstadisticasAvanzadas() {
   } finally {
     setLoading(false);
   }
-}, [filtros]);
+};
+  useEffect(() => {
+  cargarDatos();
+  cargarCategorias();
+}, []);
   const procesarEstadisticas = (codigos) => {
     const codigosFiltrados = aplicarFiltros(codigos);
 
