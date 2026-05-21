@@ -35,35 +35,32 @@ export default function EstadisticasAvanzadas() {
     }
   };
 
-  const cargarDatos = useCallback(async () => {
-    try {
-      setLoading(true);
+ const cargarDatos = useCallback(async () => {
+  try {
+    setLoading(true);
 
-      // Cargar estadísticas generales
-      const statsRes = await axios.get(
-        "http://localhost:4000/api/codigos/stats"
-      );[filtros]);
+    const statsRes = await axios.get(
+      "http://localhost:4000/api/codigos/stats"
+    );
 
-      // Cargar códigos asignados para análisis detallado
-      const codigosRes = await axios.get(
-        "http://localhost:4000/api/codigos?estado=asignado&limit=1000"
-      );
-      const codigosAsignados = codigosRes.data;
+    const codigosRes = await axios.get(
+      "http://localhost:4000/api/codigos?estado=asignado&limit=1000"
+    );
 
-      // Procesar datos
-      const estadisticas = procesarEstadisticas(codigosAsignados);
+    const codigosAsignados = codigosRes.data;
 
-      setDatos({
-        estadisticasGenerales: statsRes.data,
-        ...estadisticas,
-      });
-    } catch (error) {
-      console.error("Error cargando datos:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const estadisticas = procesarEstadisticas(codigosAsignados);
 
+    setDatos({
+      estadisticasGenerales: statsRes.data,
+      ...estadisticas,
+    });
+  } catch (error) {
+    console.error("Error cargando datos:", error);
+  } finally {
+    setLoading(false);
+  }
+}, [filtros]);
   const procesarEstadisticas = (codigos) => {
     const codigosFiltrados = aplicarFiltros(codigos);
 
