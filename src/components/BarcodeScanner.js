@@ -7,56 +7,50 @@ export default function BarcodeScanner({ onDetected }) {
   const detectedRef = useRef(false);
 
   useEffect(() => {
-    detectedRef.current = false;
+  detectedRef.current = false;
 
-    Quagga.init(
-      {
-        inputStream: {
-          type: "LiveStream",
-          target: scannerRef.current,
-          constraints: {
-            facingMode: "environment",
-          },
-        },
-
-        decoder: {
-          readers: ["code_128_reader", "ean_reader"],
+  Quagga.init(
+    {
+      inputStream: {
+        type: "LiveStream",
+        target: scannerRef.current,
+        constraints: {
+          facingMode: "environment",
         },
       },
-
-      (err) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-
-        Quagga.start();
+      decoder: {
+        readers: ["code_128_reader", "ean_reader"],
       },
-    );
+    },
+    (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-    const handleDetection = (data) => {
-      // Evitar múltiples lecturas
-      if (detectedRef.current) return;
+      Quagga.start();
+    }
+  );
 
-      const codigo = data?.codeResult?.code;
+  const handleDetection = (data) => {
+    if (detectedRef.current) return;
 
-      if (!codigo) return;
+    const codigo = data?.codeResult?.code;
 
-      detectedRef.current = true;
+    if (!codigo) return;
 
-      console.log("CODIGO ESCANEADO:", codigo);
+    detectedRef.current = true;
 
-      onDetected(codigo);
-    };
+    onDetected(codigo);
+  };
 
-    Quagga.onDetected(handleDetection);
+  Quagga.onDetected(handleDetection);
 
-    return () => {
-      Quagga.offDetected(handleDetection);
-
-      Quagga.stop();
-    };
-  }, []);
+  return () => {
+    Quagga.offDetected(handleDetection);
+    Quagga.stop();
+  };
+}, [onDetected]);
 
   return (
     <div
