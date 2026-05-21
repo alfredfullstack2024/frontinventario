@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 export default function EstadisticasAvanzadas() {
@@ -22,9 +22,9 @@ export default function EstadisticasAvanzadas() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    cargarDatos();
-    cargarCategorias();
-  }, []);
+  cargarDatos();
+  cargarCategorias();
+}, [cargarDatos]);
 
   const cargarCategorias = async () => {
     try {
@@ -35,14 +35,14 @@ export default function EstadisticasAvanzadas() {
     }
   };
 
-  const cargarDatos = async () => {
+  const cargarDatos = useCallback(async () => {
     try {
       setLoading(true);
 
       // Cargar estadísticas generales
       const statsRes = await axios.get(
         "http://localhost:4000/api/codigos/stats"
-      );
+      );[filtros]);
 
       // Cargar códigos asignados para análisis detallado
       const codigosRes = await axios.get(
