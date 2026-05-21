@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function EstadisticasAvanzadas() {
@@ -58,9 +58,11 @@ export default function EstadisticasAvanzadas() {
     setLoading(false);
   }
 };
-  useEffect(() => {
+ useEffect(() => {
   cargarDatos();
   cargarCategorias();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
   const procesarEstadisticas = (codigos) => {
     const codigosFiltrados = aplicarFiltros(codigos);
