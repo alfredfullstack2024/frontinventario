@@ -16,7 +16,7 @@ export default function CodigosDisponibles() {
     try {
       setLoading(true);
       const res = await axios.get(
-        "http://localhost:4000/api/codigos?estado=disponible&limit=500",
+        "https://backinventario-wns5.onrender.com/api/codigos?estado=disponible&limit=500",
       );
       setCodigosDisponibles(res.data);
     } catch (error) {
