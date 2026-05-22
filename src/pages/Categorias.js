@@ -10,7 +10,7 @@ export default function Categorias() {
   const cargar = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:4000/api/categorias");
+      const res = await axios.get("https://backinventario-wns5.onrender.com/api/categorias");
       setCategorias(res.data);
     } catch (error) {
       console.error("Error cargando categorías:", error);
