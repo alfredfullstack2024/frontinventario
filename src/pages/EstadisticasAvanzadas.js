@@ -25,7 +25,7 @@ export default function EstadisticasAvanzadas() {
 
   const cargarCategorias = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/categorias");
+      const res = await axios.get("https://backinventario-wns5.onrender.com/api/categorias");
       setCategorias(res.data);
     } catch (error) {
       console.error("Error cargando categorías:", error);
