@@ -21,7 +21,7 @@ export default function GenerarEtiquetas() {
 
   const cargarEstadisticas = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/codigos/stats");
+      const res = await axios.get("https://backinventario-wns5.onrender.com/api/codigos/stats");
       setStats(res.data);
     } catch (error) {
       console.error("Error cargando estadísticas:", error);
