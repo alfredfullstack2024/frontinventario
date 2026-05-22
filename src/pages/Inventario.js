@@ -163,7 +163,7 @@ export default function Inventario() {
 
       setProcesandoSalida(true);
 
-      await api.post("http://localhost:4000/api/movimientos", {
+      await api.post("https://backinventario-wns5.onrender.com/api/movimientos", {
         codigoId: codigoSeleccionado._id,
         tipo: "salida",
         cantidad: Number(cantidadSalida),
@@ -188,7 +188,7 @@ export default function Inventario() {
     try {
       setProcesandoEntrada(true);
 
-      await api.post("http://localhost:4000/api/lotes/entrada", {
+      await api.post("https://backinventario-wns5.onrender.com/api/lotes/entrada", {
         codigoId: codigoSeleccionado._id,
 
         cantidad: Number(cantidadEntrada),
@@ -218,7 +218,7 @@ export default function Inventario() {
       setCargandoHistorial(true);
 
       const res = await api.get(
-        `http://localhost:4000/api/movimientos/${codigo._id}`,
+        `https://backinventario-wns5.onrender.com/api/movimientos/${codigo._id}`,
       );
 
       setMovimientosCodigo(res.data);
@@ -403,7 +403,7 @@ Vence en ${dias} días
                               📜 Historial
                             </button>
                             <a
-                              href={`http://localhost:4000/api/barcode/${codigo.codigo}`}
+                              href={`https://backinventario-wns5.onrender.com/api/barcode/${codigo.codigo}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="btn btn-sm btn-outline-secondary"
@@ -576,13 +576,13 @@ Vence en ${dias} días
                   <div className="col-md-6 text-center">
                     <h6 className="fw-bold">Código de Barras:</h6>
                     <img
-                      src={`http://localhost:4000/api/barcode/${codigoSeleccionado.codigo}`}
+                      src={`https://backinventario-wns5.onrender.com/api/barcode/${codigoSeleccionado.codigo}`}
                       alt={codigoSeleccionado.codigo}
                       className="img-fluid border rounded"
                     />
                     <div className="mt-3">
                       <a
-                        href={`http://localhost:4000/api/barcode/${codigoSeleccionado.codigo}`}
+                        href={`https://backinventario-wns5.onrender.com/api/barcode/${codigoSeleccionado.codigo}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-primary"
