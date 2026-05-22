@@ -18,8 +18,8 @@ export default function Dashboard() {
   const cargarDatos = async () => {
     try {
       const [statsRes, categoriasRes] = await Promise.all([
-        axios.get("http://localhost:4000/api/codigos/stats"),
-        axios.get("http://localhost:4000/api/categorias"),
+        axios.get("https://backinventario-wns5.onrender.com/api/codigos/stats"),
+        axios.get("https://backinventario-wns5.onrender.com/api/categorias"),
       ]);
 
       setStats(statsRes.data);
