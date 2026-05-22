@@ -16,7 +16,9 @@ export default function Login() {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:4000/api/auth/login", {
+      const res = await axios.post(
+  "https://backinventario-wns5.onrender.com/api/auth/login",
+  {
         email,
         password,
       });
