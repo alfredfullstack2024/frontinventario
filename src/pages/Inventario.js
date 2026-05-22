@@ -34,7 +34,7 @@ export default function Inventario() {
       setLoading(true);
       const estado = filtro === "todos" ? "" : filtro;
       const res = await api.get(
-        `http://localhost:4000/api/codigos?estado=${estado}&limit=100`,
+        `https://backinventario-wns5.onrender.com/api/codigos?estado=${estado}&limit=100`,
       );
       console.log(res.data);
       setCodigos(res.data);
