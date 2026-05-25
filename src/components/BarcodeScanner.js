@@ -26,7 +26,7 @@ export default function BarcodeScanner({ onDetected }) {
       halfSample: false,
     },
 
-    numOfWorkers: navigator.hardwareConcurrency || 4,
+    numOfWorkers: 2,
 
     decoder: {
       readers: [
@@ -74,12 +74,35 @@ export default function BarcodeScanner({ onDetected }) {
 }, [onDetected]);
 
   return (
+  <div
+    style={{
+      position: "relative",
+      width: "100%",
+      maxWidth: "350px",
+      margin: "0 auto",
+    }}
+  >
     <div
       ref={scannerRef}
       style={{
         width: "100%",
-        height: "300px",
+        height: "180px",
+        overflow: "hidden",
+        borderRadius: "10px",
       }}
     />
-  );
+
+    <div
+      style={{
+        position: "absolute",
+        left: "10%",
+        top: "40%",
+        width: "80%",
+        height: "40px",
+        border: "3px solid red",
+        pointerEvents: "none",
+      }}
+    />
+  </div>
+);
 }
