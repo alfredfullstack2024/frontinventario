@@ -126,7 +126,7 @@ export default function CodigosDisponibles() {
       contenidoHTML += `
         <div class="etiqueta">
           <div class="codigo">${codigo.codigo}</div>
-          <img src="http://localhost:4000/api/barcode/${codigo.codigo}" alt="${
+          <img src="https://gestion-tareas-backend-rqyw.onrender.com/api/categ/api/barcode/${codigo.codigo}" alt="${
             codigo.codigo
           }" />
           <div class="fecha">Generado: ${new Date(
@@ -267,7 +267,7 @@ export default function CodigosDisponibles() {
                             {codigo.codigo}
                           </div>
                           <img
-                            src={`http://localhost:4000/api/barcode/${codigo.codigo}`}
+                            src={`https://gestion-tareas-backend-rqyw.onrender.com/api/barcode/${codigo.codigo}`}
                             alt={codigo.codigo}
                             className="img-fluid"
                             style={{ maxWidth: "120px", height: "auto" }}
