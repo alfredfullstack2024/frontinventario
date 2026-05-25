@@ -9,41 +9,62 @@ export default function BarcodeScanner({ onDetected }) {
   useEffect(() => {
   detectedRef.current = false;
 
-  Quagga.init(
-    {
-      inputStream: {
-        type: "LiveStream",
-        target: scannerRef.current,
-        constraints: {
-          facingMode: "environment",
-        },
-      },
-      decoder: {
-        readers: ["code_128_reader", "ean_reader"],
+ Quagga.init(
+  {
+    inputStream: {
+      type: "LiveStream",
+      target: scannerRef.current,
+      constraints: {
+        facingMode: "environment",
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
       },
     },
-    (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
 
-      Quagga.start();
+    locator: {
+      patchSize: "large",
+      halfSample: false,
+    },
+
+    numOfWorkers: navigator.hardwareConcurrency || 4,
+
+    decoder: {
+      readers: [
+        "code_128_reader",
+        "ean_reader",
+        "ean_8_reader",
+        "code_39_reader",
+      ],
+    },
+
+    locate: true,
+  },
+
+  (err) => {
+    if (err) {
+      console.error(err);
+      return;
     }
-  );
 
+    console.log("Scanner iniciado");
+    Quagga.start();
+  }
+);
   const handleDetection = (data) => {
-    if (detectedRef.current) return;
+  console.log("Detectado:", data);
 
-    const codigo = data?.codeResult?.code;
+  if (detectedRef.current) return;
 
-    if (!codigo) return;
+  const codigo = data?.codeResult?.code;
 
-    detectedRef.current = true;
+  if (!codigo) return;
 
-    onDetected(codigo);
-  };
+  detectedRef.current = true;
 
+  console.log("Código leído:", codigo);
+
+  onDetected(codigo);
+};
   Quagga.onDetected(handleDetection);
 
   return () => {
