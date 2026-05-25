@@ -267,11 +267,11 @@ export default function CodigosDisponibles() {
                             {codigo.codigo}
                           </div>
                           <img
-                            src={`https://gestion-tareas-backend-rqyw.onrender.com/api/barcode/${codigo.codigo}`}
-                            alt={codigo.codigo}
-                            className="img-fluid"
-                            style={{ maxWidth: "120px", height: "auto" }}
-                          />
+  src={`https://backinventario-wns5.onrender.com/api/barcode/${codigo.codigo}`}
+  alt={codigo.codigo}
+  className="img-fluid"
+  style={{ maxWidth: "120px", height: "auto" }}
+/>
                           <div
                             className="small text-muted mt-1"
                             style={{ fontSize: "9px" }}
