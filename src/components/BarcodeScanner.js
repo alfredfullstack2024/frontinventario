@@ -50,16 +50,23 @@ export default function BarcodeScanner({ onDetected }) {
     Quagga.start();
   }
 );
-  const handleDetection = (data) => {
+ const handleDetection = (data) => {
+  alert("Detectó algo");
+
   console.log("Detectado:", data);
 
   if (detectedRef.current) return;
 
   const codigo = data?.codeResult?.code;
 
-  if (!codigo) return;
+  if (!codigo) {
+    alert("No encontró código");
+    return;
+  }
 
   detectedRef.current = true;
+
+  alert(`Código leído: ${codigo}`);
 
   console.log("Código leído:", codigo);
 
