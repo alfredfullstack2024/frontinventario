@@ -86,25 +86,21 @@ export default function CodigosDisponibles() {
           <title>Códigos Seleccionados para Imprimir</title>
           <style>
             body { font-family: Arial, sans-serif; }
-            .etiqueta { 
-              display: inline-block; 
-              margin: 10px; 
-              padding: 10px; 
-              border: 2px solid #333; 
-              text-align: center;
-              page-break-inside: avoid;
-              width: 200px;
-              background: white;
-            }
-            .codigo { 
-              font-weight: bold; 
-              margin: 5px 0; 
-              font-size: 14px;
-            }
-            img { 
-  margin: 5px 0;
-  width: 180px;
-  height: 50px;
+           .etiqueta {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid #333;
+  text-align: center;
+  page-break-inside: avoid;
+  width: 320px;
+  background: white;
+}
+
+img {
+  margin: 10px 0;
+  width: 280px;
+  height: 90px;
   object-fit: contain;
 }
             .fecha { 
