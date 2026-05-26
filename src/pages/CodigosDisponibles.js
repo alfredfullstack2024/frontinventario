@@ -140,7 +140,7 @@ export default function CodigosDisponibles() {
         </body>
       </html>
     `;
-
+console.log(contenidoHTML);
     ventanaImprimir.document.write(contenidoHTML);
     ventanaImprimir.document.close();
 
