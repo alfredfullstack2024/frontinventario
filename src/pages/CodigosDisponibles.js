@@ -126,9 +126,9 @@ export default function CodigosDisponibles() {
       contenidoHTML += `
         <div class="etiqueta">
           <div class="codigo">${codigo.codigo}</div>
-          <img src="https://gestion-tareas-backend-rqyw.onrender.com/api/categ/api/barcode/${codigo.codigo}" alt="${
-            codigo.codigo
-          }" />
+          <img src="https://backinventario-wns5.onrender.com/api/barcode/${codigo.codigo}" alt="${
+  codigo.codigo
+}" />
           <div class="fecha">Generado: ${new Date(
             codigo.fechaGeneracion,
           ).toLocaleDateString()}</div>
