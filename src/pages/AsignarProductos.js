@@ -69,10 +69,11 @@ export default function AsignarProductos() {
       setError("⚠️ Este código ya tiene un producto asignado");
       setCodigoActual(codigoEncontrado);
       limpiarFormulario();
-            } else {
+                } else {
       setError("");
       setCodigoActual(codigoEncontrado);
-      setScanning(false);
+      // Pequeño delay para que ZXing termine limpiamente antes de desmontar
+      setTimeout(() => setScanning(false), 300);
     }
 
   } catch (err) {
@@ -93,9 +94,10 @@ export default function AsignarProductos() {
       return;
     }
 
-    procesando.current = true; // bloquea inmediatamente
+    procesando.current = true;
     console.log("Código detectado:", codigo);
-    buscarCodigo(codigo);
+    // Pequeño delay para que el escáner no colisione con el estado de React
+    setTimeout(() => buscarCodigo(codigo), 150);
   };
 
   const buscarManual = (e) => {
