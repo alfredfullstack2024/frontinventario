@@ -18,7 +18,6 @@ export default function BarcodeScanner({ onDetected }) {
   facingMode: {
     ideal: "environment",
   },
-},
 
     locator: {
   patchSize: "x-large",
