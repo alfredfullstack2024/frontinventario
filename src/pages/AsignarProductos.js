@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import api from "../services/api";
 import BarcodeScanner from "../components/BarcodeScanner";
 
 export default function AsignarProductos() {
   const [scanning, setScanning] = useState(false);
+  const procesando = useRef(false);
   const [categorias, setCategorias] = useState([]);
   const [codigoActual, setCodigoActual] = useState(null);
   const [codigoManual, setCodigoManual] = useState("");
@@ -79,27 +80,23 @@ setScanning(false);
   } catch (err) {
     console.error(err);
 
-        setError(err?.response?.data?.message || err?.message || "Error desconocido");
-
-    setError("❌ Código no encontrado");
+            setError("❌ Código no encontrado");
     setCodigoActual(null);
+    procesando.current = false; // permite reintentar si hubo error
   }
 };
 
-  const handleDetected = (codigo) => {
-    // Evitar múltiples lecturas
-    if (!codigo || codigoActual) return;
+    const handleDetected = (codigo) => {
+    if (!codigo) return;
+    if (procesando.current) return; // bloquea lecturas duplicadas
 
-    // Validar tipo
     if (typeof codigo !== "string") {
       console.error("Código inválido detectado:", codigo);
       return;
     }
 
+    procesando.current = true; // bloquea inmediatamente
     console.log("Código detectado:", codigo);
-
-    // Detener scanner inmediatamente
-    
     buscarCodigo(codigo);
   };
 
