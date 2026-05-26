@@ -15,11 +15,10 @@ export default function BarcodeScanner({ onDetected }) {
       type: "LiveStream",
       target: scannerRef.current,
       constraints: {
-        facingMode: "environment",
-        width: { ideal: 1280 },
-        height: { ideal: 720 },
-      },
-    },
+  facingMode: {
+    ideal: "environment",
+  },
+},
 
     locator: {
   patchSize: "x-large",
