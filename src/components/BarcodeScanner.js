@@ -22,20 +22,17 @@ export default function BarcodeScanner({ onDetected }) {
     },
 
     locator: {
-      patchSize: "large",
-      halfSample: false,
-    },
+  patchSize: "x-large",
+  halfSample: false,
+},
 
     numOfWorkers: 2,
 
-    decoder: {
-      readers: [
-        "code_128_reader",
-        "ean_reader",
-        "ean_8_reader",
-        "code_39_reader",
-      ],
-    },
+   decoder: {
+  readers: [
+    "code_128_reader",
+  ],
+},
 
     locate: true,
   },
@@ -93,7 +90,7 @@ export default function BarcodeScanner({ onDetected }) {
       ref={scannerRef}
       style={{
         width: "100%",
-        height: "180px",
+        height: "250px",
         overflow: "hidden",
         borderRadius: "10px",
       }}
