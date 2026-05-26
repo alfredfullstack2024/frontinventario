@@ -69,9 +69,9 @@ export default function AsignarProductos() {
       setError("⚠️ Este código ya tiene un producto asignado");
       setCodigoActual(codigoEncontrado);
       limpiarFormulario();
-    } else {
-      console.log("=== CODIGO ENCONTRADO ===", JSON.stringify(codigoEncontrado));
-      setCodigoActual(codigoEncontrado);
+        } else {
+      // Mostrar datos en pantalla para diagnóstico
+      setError("DEBUG: " + JSON.stringify(codigoEncontrado));
       setScanning(false);
     }
 
