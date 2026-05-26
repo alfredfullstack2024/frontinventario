@@ -1,110 +1,65 @@
 import { useEffect, useRef } from "react";
-import Quagga from "quagga";
+import { BrowserMultiFormatReader } from "@zxing/browser";
 
 export default function BarcodeScanner({ onDetected }) {
-  const scannerRef = useRef(null);
-
-  const detectedRef = useRef(false);
+  const videoRef = useRef(null);
 
   useEffect(() => {
-  detectedRef.current = false;
+    const codeReader = new BrowserMultiFormatReader();
 
- Quagga.init(
-  {
-    inputStream: {
-      type: "LiveStream",
-      target: scannerRef.current,
-      constraints: {
-  facingMode: {
-    ideal: "environment",
-  },
+    let controls = null;
 
-    locator: {
-  patchSize: "x-large",
-  halfSample: false,
-},
+    const iniciarScanner = async () => {
+      try {
+        controls = await codeReader.decodeFromVideoDevice(
+          undefined,
+          videoRef.current,
+          (result, error) => {
+            if (result) {
+              const codigo = result.getText();
 
-    numOfWorkers: 2,
+              console.log("Código leído:", codigo);
 
-   decoder: {
-  readers: [
-    "code_128_reader",
-  ],
-},
+              alert(`Código leído: ${codigo}`);
 
-    locate: true,
-  },
+              onDetected(codigo);
 
-  (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+              controls?.stop();
+            }
+          }
+        );
+      } catch (err) {
+        console.error("Error iniciando cámara:", err);
+      }
+    };
 
-    console.log("Scanner iniciado");
-    Quagga.start();
-  }
-);
- const handleDetection = (data) => {
-  alert("Detectó algo");
+    iniciarScanner();
 
-  console.log("Detectado:", data);
-
-  if (detectedRef.current) return;
-
-  const codigo = data?.codeResult?.code;
-
-  if (!codigo) {
-    alert("No encontró código");
-    return;
-  }
-
-  detectedRef.current = true;
-
-  alert(`Código leído: ${codigo}`);
-
-  console.log("Código leído:", codigo);
-
-  onDetected(codigo);
-};
-  Quagga.onDetected(handleDetection);
-
-  return () => {
-    Quagga.offDetected(handleDetection);
-    Quagga.stop();
-  };
-}, [onDetected]);
+    return () => {
+      controls?.stop();
+      codeReader.reset();
+    };
+  }, [onDetected]);
 
   return (
-  <div
-    style={{
-      position: "relative",
-      width: "100%",
-      maxWidth: "350px",
-      margin: "0 auto",
-    }}
-  >
     <div
-      ref={scannerRef}
       style={{
         width: "100%",
-        height: "250px",
-        overflow: "hidden",
-        borderRadius: "10px",
+        maxWidth: "400px",
+        margin: "0 auto",
       }}
-    />
-
-    <div
-      style={{
-        position: "absolute",
-        left: "10%",
-        top: "40%",
-        width: "80%",
-        height: "40px",
-        border: "3px solid red",
-        pointerEvents: "none",
-      }}
-    />
-  </div>
-);
+    >
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        muted
+        style={{
+          width: "100%",
+          borderRadius: "10px",
+          border: "2px solid #0d6efd",
+        }}
+      />
+    </div>
+  );
 }
