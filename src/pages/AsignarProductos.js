@@ -72,7 +72,7 @@ export default function AsignarProductos() {
                 } else {
       setError("");
       setCodigoActual(codigoEncontrado);
-      // Pequeño delay para que ZXing termine limpiamente antes de desmontar
+      procesando.current = false;
       setTimeout(() => setScanning(false), 300);
     }
 
