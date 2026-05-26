@@ -55,11 +55,11 @@ export default function AsignarProductos() {
       `/codigos/${encodeURIComponent(codigoLimpio)}`
     );
 
-    alert("Respuesta recibida");
+    
 
     const codigoEncontrado = res.data;
 
-    alert(JSON.stringify(codigoEncontrado));
+    
 
     console.log("TIPO codigoEncontrado:", typeof codigoEncontrado);
     console.log("CODIGO ENCONTRADO API:", codigoEncontrado);
@@ -69,10 +69,11 @@ export default function AsignarProductos() {
       setCodigoActual(codigoEncontrado);
       limpiarFormulario();
     } else {
-      alert("Asignando codigoActual");
+      
 
       setCodigoActual(codigoEncontrado);
-      setScanning(false);
+setScanning(false);
+      
     }
 
   } catch (err) {
