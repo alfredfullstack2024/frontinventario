@@ -126,7 +126,7 @@ export default function GenerarEtiquetas() {
       contenidoHTML += `
         <div class="etiqueta">
           <div class="codigo">${codigo.codigo}</div>
-          <img src="http://localhost:4000/api/barcode/${codigo.codigo}" alt="${codigo.codigo}" />
+          <img src="https://backinventario-wns5.onrender.com/api/barcode/${codigo.codigo}" alt="${codigo.codigo}" />
           <div style="font-size: 12px;">Inventario</div>
         </div>
       `;
@@ -303,7 +303,7 @@ export default function GenerarEtiquetas() {
                           {codigo.codigo}
                         </div>
                         <img
-                          src={`http://localhost:4000/api/barcode/${codigo.codigo}`}
+                          src={`https://backinventario-wns5.onrender.com/api/barcode/${codigo.codigo}`}
                           alt={codigo.codigo}
                           className="img-fluid"
                           style={{ maxWidth: "150px" }}
