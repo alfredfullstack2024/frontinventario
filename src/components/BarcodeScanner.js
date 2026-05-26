@@ -3,44 +3,35 @@ import { BrowserMultiFormatReader } from "@zxing/browser";
 
 export default function BarcodeScanner({ onDetected }) {
   const videoRef = useRef(null);
+  const onDetectedRef = useRef(onDetected);
+  const yaDetectado = useRef(false);
+
+  // Mantiene la referencia actualizada sin re-disparar el useEffect
+  useEffect(() => {
+    onDetectedRef.current = onDetected;
+  }, [onDetected]);
 
   useEffect(() => {
-    alert("Componente BarcodeScanner cargado");
-
     const codeReader = new BrowserMultiFormatReader();
-
     let controls = null;
 
     const iniciarScanner = async () => {
       try {
-        alert("Iniciando cámara...");
-
         controls = await codeReader.decodeFromVideoDevice(
           undefined,
           videoRef.current,
           (result, error) => {
-            if (result) {
+            if (result && !yaDetectado.current) {
+              yaDetectado.current = true; // bloquea inmediatamente
               const codigo = result.getText();
-
               console.log("Código leído:", codigo);
-
-              alert(`Código leído: ${codigo}`);
-
-              onDetected(codigo);
-
               controls?.stop();
-            }
-
-            if (error) {
-              console.log("ZXing error:", error);
+              onDetectedRef.current(codigo); // usa ref, no prop directa
             }
           }
         );
-
-        alert("ZXing iniciado correctamente");
       } catch (err) {
         console.error("Error iniciando cámara:", err);
-        alert(`Error iniciando cámara: ${err.message}`);
       }
     };
 
@@ -50,16 +41,10 @@ export default function BarcodeScanner({ onDetected }) {
       controls?.stop();
       codeReader.reset();
     };
-  }, [onDetected]);
+  }, []); // ← array vacío, solo monta una vez
 
   return (
-    <div
-      style={{
-        width: "100%",
-        maxWidth: "400px",
-        margin: "0 auto",
-      }}
-    >
+    <div style={{ width: "100%", maxWidth: "400px", margin: "0 auto" }}>
       <video
         ref={videoRef}
         autoPlay
