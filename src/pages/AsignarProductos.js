@@ -4,7 +4,7 @@ import BarcodeScanner from "../components/BarcodeScanner";
 
 export default function AsignarProductos() {
   const [scanning, setScanning] = useState(false);
-  const [categorias, setCategorias] = useState([]);
+  // const [categorias, setCategorias] = useState([]);
   const [codigoActual, setCodigoActual] = useState(null);
   const [codigoManual, setCodigoManual] = useState("");
   const [sugerencias, setSugerencias] = useState([]);
@@ -128,7 +128,7 @@ export default function AsignarProductos() {
       console.error(error);
     }
   };
-  const asignarProducto = async (e) => {
+ {/*  const asignarProducto = async (e) => {
     e.preventDefault();
     if (!codigoActual || !codigoActual.codigo || !nombre.trim()) {
       setError("❌ Código inválido o faltan datos");
@@ -136,7 +136,7 @@ export default function AsignarProductos() {
       console.error("codigoActual inválido:", codigoActual);
 
       return;
-    }
+    }*/}
 
     try {
       console.log("ANTES PUT:", codigoActual);
