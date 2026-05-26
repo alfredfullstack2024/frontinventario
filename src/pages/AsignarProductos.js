@@ -45,30 +45,49 @@ export default function AsignarProductos() {
   };
 
   const buscarCodigo = async (codigo) => {
-    try {
-      setError("");
-      setExito("");
+  try {
+    setError("");
+    setExito("");
 
-      const codigoLimpio = codigo.trim();
+    const codigoLimpio = codigo.trim();
 
-      const res = await api.get(`/codigos/${encodeURIComponent(codigoLimpio)}`);
-      const codigoEncontrado = res.data;
-      console.log("TIPO codigoEncontrado:", typeof codigoEncontrado);
-      console.log("CODIGO ENCONTRADO API:", codigoEncontrado);
+    const res = await api.get(
+      `/codigos/${encodeURIComponent(codigoLimpio)}`
+    );
 
-      if (codigoEncontrado.estado === "asignado") {
-        setError("⚠️ Este código ya tiene un producto asignado");
-        setCodigoActual(codigoEncontrado);
-        limpiarFormulario();
-      } else {
-        setCodigoActual(codigoEncontrado);
-        setScanning(false);
-      }
-    } catch (err) {
-      setError("❌ Código no encontrado");
-      setCodigoActual(null);
+    alert("Respuesta recibida");
+
+    const codigoEncontrado = res.data;
+
+    alert(JSON.stringify(codigoEncontrado));
+
+    console.log("TIPO codigoEncontrado:", typeof codigoEncontrado);
+    console.log("CODIGO ENCONTRADO API:", codigoEncontrado);
+
+    if (codigoEncontrado.estado === "asignado") {
+      setError("⚠️ Este código ya tiene un producto asignado");
+      setCodigoActual(codigoEncontrado);
+      limpiarFormulario();
+    } else {
+      alert("Asignando codigoActual");
+
+      setCodigoActual(codigoEncontrado);
+      setScanning(false);
     }
-  };
+
+  } catch (err) {
+    console.error(err);
+
+    alert(
+      err?.response?.data?.message ||
+      err?.message ||
+      "Error desconocido"
+    );
+
+    setError("❌ Código no encontrado");
+    setCodigoActual(null);
+  }
+};
 
   const handleDetected = (codigo) => {
     // Evitar múltiples lecturas
