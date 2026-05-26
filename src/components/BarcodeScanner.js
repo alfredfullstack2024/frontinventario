@@ -4,12 +4,6 @@ import { BrowserMultiFormatReader } from "@zxing/browser";
 export default function BarcodeScanner({ onDetected }) {
   const videoRef = useRef(null);
 
- import { useEffect, useRef } from "react";
-import { BrowserMultiFormatReader } from "@zxing/browser";
-
-export default function BarcodeScanner({ onDetected }) {
-  const videoRef = useRef(null);
-
   useEffect(() => {
     alert("Componente BarcodeScanner cargado");
 
