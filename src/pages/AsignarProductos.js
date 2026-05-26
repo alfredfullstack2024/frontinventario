@@ -79,11 +79,7 @@ setScanning(false);
   } catch (err) {
     console.error(err);
 
-    alert(
-      err?.response?.data?.message ||
-      err?.message ||
-      "Error desconocido"
-    );
+        setError(err?.response?.data?.message || err?.message || "Error desconocido");
 
     setError("❌ Código no encontrado");
     setCodigoActual(null);
@@ -103,8 +99,7 @@ setScanning(false);
     console.log("Código detectado:", codigo);
 
     // Detener scanner inmediatamente
-    setScanning(false);
-
+    
     buscarCodigo(codigo);
   };
 
