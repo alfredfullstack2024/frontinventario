@@ -70,11 +70,9 @@ export default function AsignarProductos() {
       setCodigoActual(codigoEncontrado);
       limpiarFormulario();
     } else {
-      
-
+      console.log("=== CODIGO ENCONTRADO ===", JSON.stringify(codigoEncontrado));
       setCodigoActual(codigoEncontrado);
-setScanning(false);
-      
+      setScanning(false);
     }
 
   } catch (err) {
