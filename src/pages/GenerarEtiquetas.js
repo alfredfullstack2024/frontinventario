@@ -72,8 +72,8 @@ export default function GenerarEtiquetas() {
     try {
       const endpoint =
         modoGeneracion === "cantidad"
-          ? "http://localhost:4000/api/codigos/generar"
-          : "http://localhost:4000/api/codigos/generar-rango";
+          ? "https://backinventario-wns5.onrender.com/api/codigos/generar"
+          : "https://backinventario-wns5.onrender.com/api/codigos/generar-rango";
 
       const res = await axios.post(endpoint, parametros);
 
