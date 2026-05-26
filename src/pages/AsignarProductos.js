@@ -307,13 +307,62 @@ setScanning(false);
 
               {/* Escáner */}
               {scanning && (
-                <div className="alert alert-primary">
-                  <p className="mb-2">
-                    📱 <strong>Apunta la cámara al código de barras</strong>
-                  </p>
-                  <BarcodeScanner onDetected={handleDetected} />
-                </div>
-              )}
+  <div className="alert alert-primary">
+    <p className="mb-2 text-center">
+      📱 <strong>Centra el código de barras dentro del recuadro</strong>
+    </p>
+    <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
+      <BarcodeScanner onDetected={handleDetected} />
+
+      {/* Guía visual superpuesta */}
+      <div style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "70%",
+        height: "120px",
+        border: "3px solid #00ff00",
+        borderRadius: "8px",
+        boxShadow: "0 0 0 9999px rgba(0,0,0,0.45)",
+        pointerEvents: "none",
+        zIndex: 10,
+      }}>
+        {/* Esquinas decorativas */}
+        {["topLeft","topRight","bottomLeft","bottomRight"].map((corner) => (
+          <div key={corner} style={{
+            position: "absolute",
+            width: "20px",
+            height: "20px",
+            borderColor: "#00ff00",
+            borderStyle: "solid",
+            borderWidth: corner.includes("top") ? "3px 0 0" : "0 0 3px",
+            ...(corner.includes("Right") ? { right: -2, borderRightWidth: "3px" } : { left: -2, borderLeftWidth: "3px" }),
+            ...(corner.includes("top") ? { top: -2 } : { bottom: -2 }),
+          }} />
+        ))}
+
+        {/* Línea de escaneo animada */}
+        <div style={{
+          position: "absolute",
+          width: "100%",
+          height: "2px",
+          background: "rgba(0,255,0,0.8)",
+          animation: "scanLine 1.5s linear infinite",
+          top: "50%",
+        }} />
+      </div>
+    </div>
+
+    <style>{`
+      @keyframes scanLine {
+        0%   { top: 10%; }
+        50%  { top: 90%; }
+        100% { top: 10%; }
+      }
+    `}</style>
+  </div>
+)}
 
               {/* Mensajes */}
               {error && <div className="alert alert-danger">{error}</div>}
