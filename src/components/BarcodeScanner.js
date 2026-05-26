@@ -21,12 +21,8 @@ export default function BarcodeScanner({ onDetected }) {
               console.log("Código leído:", codigo);
 
               // Primero llama onDetected, LUEGO detiene
-              setTimeout(() => {
-                controlsRef.current?.stop();
-              }, 500);
-
               onDetected(codigo);
-            }
+              controlsRef.current?.stop();            }
           }
         );
       } catch (err) {
