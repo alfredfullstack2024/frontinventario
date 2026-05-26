@@ -69,11 +69,10 @@ export default function AsignarProductos() {
       setError("⚠️ Este código ya tiene un producto asignado");
       setCodigoActual(codigoEncontrado);
       limpiarFormulario();
-                } else {
+                    } else {
       setError("");
+      setScanning(false);
       setCodigoActual(codigoEncontrado);
-      procesando.current = false;
-      setTimeout(() => setScanning(false), 300);
     }
 
   } catch (err) {
@@ -94,11 +93,9 @@ export default function AsignarProductos() {
       return;
     }
 
-    procesando.current = true;
+        procesando.current = true;
     console.log("Código detectado:", codigo);
-    // Pequeño delay para que el escáner no colisione con el estado de React
-    setTimeout(() => buscarCodigo(codigo), 150);
-  };
+    buscarCodigo(codigo);
 
   const buscarManual = (e) => {
     e.preventDefault();
