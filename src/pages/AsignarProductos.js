@@ -32,6 +32,9 @@ export default function AsignarProductos() {
   const [fechaVencimiento, setFechaVencimiento] = useState("");
   const [numeroRemisionFactura, setNumeroRemisionFactura] = useState("");
 
+    // Captura errores en pantalla
+  const [debugInfo, setDebugInfo] = useState("");
+  
   useEffect(() => {
     cargarCategorias();
   }, []);
