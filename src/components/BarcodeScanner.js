@@ -16,16 +16,13 @@ export default function BarcodeScanner({ onDetected }) {
           undefined,
           videoRef.current,
           (result, error) => {
-            if (result && !yaDetectado.current) {
+           if (result && !yaDetectado.current) {
+
   yaDetectado.current = true;
 
-  const codigo = result.getText();
-  console.log("Código leído:", codigo);
+  const codigo = result.getText().trim();
 
-  // Espera un poco antes de detener cámara
-  setTimeout(() => {
-    controlsRef.current?.stop();
-  }, 500);
+  console.log("Código leído:", codigo);
 
   onDetected(codigo);
 }
