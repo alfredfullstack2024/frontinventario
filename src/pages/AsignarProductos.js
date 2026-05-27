@@ -92,7 +92,7 @@ export default function AsignarProductos() {
 
        procesando.current = true;
     console.log("Código detectado:", codigo);
-    buscarCodigo(codigo);
+    buscarCodigo(codigo.trim());
   };
 
   const buscarManual = (e) => {
