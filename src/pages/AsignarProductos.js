@@ -65,7 +65,14 @@ export default function AsignarProductos() {
         setError("⚠️ Este código ya tiene un producto asignado");
         setCodigoActual(codigoEncontrado);
         limpiarFormulario();
-      
+      } else {
+        setError("");
+        setCodigoActual(codigoEncontrado);
+        setScanning(false);
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 200);
+      }
     } catch (err) {
       setDebugInfo("ERROR: " + (err?.response?.data?.message || err?.message || "desconocido"));
       setError("❌ Código no encontrado");
