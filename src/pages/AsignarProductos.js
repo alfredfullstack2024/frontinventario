@@ -48,44 +48,35 @@ export default function AsignarProductos() {
     }
   };
 
+ 
   const buscarCodigo = async (codigo) => {
-  try {
-    setError("");
-    setExito("");
-
-    const codigoLimpio = codigo.trim();
-
-    const res = await api.get(
-      `/codigos/${encodeURIComponent(codigoLimpio)}`
-    );
-
-    
-
-    const codigoEncontrado = res.data;
-
-    
-
-    console.log("TIPO codigoEncontrado:", typeof codigoEncontrado);
-    console.log("CODIGO ENCONTRADO API:", codigoEncontrado);
-
-    if (codigoEncontrado.estado === "asignado") {
-      setError("⚠️ Este código ya tiene un producto asignado");
-      setCodigoActual(codigoEncontrado);
-      limpiarFormulario();
-                    } else {
+    try {
       setError("");
-      setScanning(false);
-      setCodigoActual(codigoEncontrado);
+      setExito("");
+      setDebugInfo("Buscando: " + codigo);
+
+      const codigoLimpio = codigo.trim();
+      const res = await api.get(`/codigos/${encodeURIComponent(codigoLimpio)}`);
+      const codigoEncontrado = res.data;
+
+      setDebugInfo("Encontrado: " + JSON.stringify(codigoEncontrado).substring(0, 100));
+
+      if (codigoEncontrado.estado === "asignado") {
+        setError("⚠️ Este código ya tiene un producto asignado");
+        setCodigoActual(codigoEncontrado);
+        limpiarFormulario();
+      } else {
+        setError("");
+        setScanning(false);
+        setCodigoActual(codigoEncontrado);
+      }
+    } catch (err) {
+      setDebugInfo("ERROR: " + (err?.response?.data?.message || err?.message || "desconocido"));
+      setError("❌ Código no encontrado");
+      setCodigoActual(null);
+      procesando.current = false;
     }
-
-  } catch (err) {
-    console.error(err);
-
-            setError("❌ Código no encontrado");
-    setCodigoActual(null);
-    procesando.current = false; // permite reintentar si hubo error
-  }
-};
+  };
 
     const handleDetected = (codigo) => {
     if (!codigo) return;
@@ -237,7 +228,12 @@ export default function AsignarProductos() {
             <div className="card-header bg-info text-white">
               <h2 className="mb-0">📱 Asignar Productos a Códigos</h2>
             </div>
-            <div className="card-body">
+                       <div className="card-body">
+              {debugInfo && (
+                <div className="alert alert-warning" style={{fontSize:"12px", wordBreak:"break-all"}}>
+                  {debugInfo}
+                </div>
+              )}
               <p className="text-muted mb-4">
                 Escanea un código generado para asignarle la información del
                 producto
