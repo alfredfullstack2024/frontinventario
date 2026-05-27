@@ -52,7 +52,6 @@ export default function AsignarProductos() {
   const buscarCodigo = async (codigo) => {
     try {
       setError("");
-      setExito("");
       setDebugInfo("Buscando: " + codigo);
 
       const codigoLimpio = codigo.trim();
@@ -62,17 +61,31 @@ export default function AsignarProductos() {
       setDebugInfo("Encontrado: " + JSON.stringify(codigoEncontrado).substring(0, 100));
 
       if (codigoEncontrado.estado === "asignado") {
-        setError("⚠️ Este código ya tiene un producto asignado");
-        setCodigoActual(codigoEncontrado);
-        limpiarFormulario();
-      } else {
-        setError("");
-        setCodigoActual(codigoEncontrado);
-        setScanning(false);
-        setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }, 200);
-      }
+
+  setError("⚠️ Este código ya tiene un producto asignado");
+
+  setCodigoActual(codigoEncontrado);
+
+  procesando.current = false;
+
+  limpiarFormulario();
+
+} else {
+
+  setError("");
+
+  setCodigoActual(codigoEncontrado);
+
+  setScanning(false);
+
+  procesando.current = false;
+
+  setExito(`✅ Código ${codigoLimpio} encontrado correctamente`);
+
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 200);
+}
     } catch (err) {
       setDebugInfo("ERROR: " + (err?.response?.data?.message || err?.message || "desconocido"));
       setError("❌ Código no encontrado");
@@ -81,19 +94,35 @@ export default function AsignarProductos() {
     }
   };
 
-    const handleDetected = (codigo) => {
-    if (!codigo) return;
-    if (procesando.current) return; // bloquea lecturas duplicadas
+    const handleDetected = async (codigo) => {
 
-    if (typeof codigo !== "string") {
-      console.error("Código inválido detectado:", codigo);
-      return;
-    }
+  if (!codigo) return;
 
-       procesando.current = true;
-    console.log("Código detectado:", codigo);
-    buscarCodigo(codigo.trim());
-  };
+  if (procesando.current) return;
+
+  procesando.current = true;
+
+  try {
+
+    const codigoLimpio = codigo.trim();
+
+    console.log("Código detectado:", codigoLimpio);
+
+    setDebugInfo("✅ Escaneado: " + codigoLimpio);
+
+    setExito(`✅ Código ${codigoLimpio} escaneado`);
+
+    await buscarCodigo(codigoLimpio);
+
+  } catch (error) {
+
+    console.error(error);
+
+    setError("❌ Error leyendo código");
+
+    procesando.current = false;
+  }
+};
 
   const buscarManual = (e) => {
     e.preventDefault();
@@ -216,12 +245,14 @@ export default function AsignarProductos() {
     setNumeroRemisionFactura("");
   };
 
-  const nuevoEscaneo = () => {
-    setCodigoActual(null);
-    setError("");
-    setExito("");
-    limpiarFormulario();
-  };
+ const nuevoEscaneo = () => {
+  procesando.current = false;
+  setScanning(false);
+  setCodigoActual(null);
+  setError("");
+  setExito("");
+  limpiarFormulario();
+};
 
   return (
     <div className="container mt-4">
