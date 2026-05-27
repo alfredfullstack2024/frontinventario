@@ -11,18 +11,24 @@ export default function BarcodeScanner({ onDetected }) {
 
     const iniciarScanner = async () => {
       try {
+        videoRef.current?.setAttribute("playsinline", true);
         controlsRef.current = await codeReader.decodeFromVideoDevice(
           undefined,
           videoRef.current,
           (result, error) => {
             if (result && !yaDetectado.current) {
-              yaDetectado.current = true;
-              const codigo = result.getText();
-              console.log("Código leído:", codigo);
+  yaDetectado.current = true;
 
-              // Primero llama onDetected, LUEGO detiene
-              onDetected(codigo);
-              controlsRef.current?.stop();            }
+  const codigo = result.getText();
+  console.log("Código leído:", codigo);
+
+  // Espera un poco antes de detener cámara
+  setTimeout(() => {
+    controlsRef.current?.stop();
+  }, 500);
+
+  onDetected(codigo);
+}
           }
         );
       } catch (err) {
