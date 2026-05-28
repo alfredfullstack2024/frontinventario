@@ -2,59 +2,43 @@ import { useEffect, useRef } from "react";
 import { BrowserMultiFormatReader } from "@zxing/browser";
 
 export default function BarcodeScanner({ onDetected }) {
-
   const videoRef = useRef(null);
   const yaDetectado = useRef(false);
   const controlsRef = useRef(null);
+  const codeReaderRef = useRef(null);
 
   useEffect(() => {
-
-    const codeReader = new BrowserMultiFormatReader();
+    codeReaderRef.current = new BrowserMultiFormatReader();
 
     const iniciarScanner = async () => {
-
       try {
-
-        videoRef.current?.setAttribute("playsinline", true);
-
-        controlsRef.current = await codeReader.decodeFromVideoDevice(
+        controlsRef.current = await codeReaderRef.current.decodeFromVideoDevice(
           undefined,
           videoRef.current,
           (result) => {
-
             if (result && !yaDetectado.current) {
-
               yaDetectado.current = true;
-
               const codigo = result.getText().trim();
-
               console.log("Código leído:", codigo);
-
+              // Detener ANTES de llamar onDetected para evitar
+              // que el cleanup lo intente detener de nuevo
+              try { controlsRef.current?.stop(); } catch(e) {}
               onDetected(codigo);
             }
           }
         );
-
       } catch (err) {
-
         console.error("Error iniciando cámara:", err);
-
       }
     };
 
     iniciarScanner();
 
     return () => {
-
-      try {
-        controlsRef.current?.stop();
-      } catch (e) {
-        console.log("Scanner ya detenido");
-      }
-
-      codeReader.reset();
+      // Cleanup seguro — nunca lanza error a React
+      try { controlsRef.current?.stop(); } catch(e) {}
+      try { codeReaderRef.current?.reset(); } catch(e) {}
     };
-
   }, []); // eslint-disable-line
 
   return (
