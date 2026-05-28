@@ -86,7 +86,7 @@ export default function AsignarProductos() {
   }, 200);
 }
     } catch (err) {
-      setDebugInfo("ERROR: " + (err?.response?.data?.message || err?.message || "desconocido"));
+      
       setError("❌ Código no encontrado");
       setCodigoActual(null);
       procesando.current = false;
