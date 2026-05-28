@@ -418,62 +418,61 @@ export default function EstadisticasAvanzadas() {
               </thead>
 
               <tbody>
+  {datos.productosRecientes.map((codigo, idx) => {
 
-                {datos.productosRecientes.map((codigo, idx) => {
+    const producto = codigo.producto;
 
-                  const producto = codigo.producto;
+    const stockCritico =
+      producto.stock <= 3;
 
-                  const stockCritico =
-                    producto.stock <= 3;
+    return (
+      <tr
+        key={idx}
+        className={
+          stockCritico
+            ? "table-danger"
+            : ""
+        }
+      >
+        <td>
+          <strong>
+            {producto.nombre}
+          </strong>
+        </td>
 
-                  return (
-                    <tr
-                      key={idx}
-                      className={
-                        stockCritico
-                          ? "table-danger"
-                          : ""
-                      }
-                    >
-                      <td>
-                        <strong>
-                          {producto.nombre}
-                        </strong>
-                      </td>
+        <td>
+          <span
+            className={`badge ${
+              stockCritico
+                ? "bg-danger"
+                : "bg-success"
+            }`}
+          >
+            {producto.stock}
+          </span>
+        </td>
 
-                      <td>
-                        <span
-                          className={`badge ${
-                            stockCritico
-                              ? "bg-danger"
-                              : "bg-success"
-                          }`}
-                        >
-                          {producto.stock}
-                        </span>
-                      </td>
+        <td>
+          {producto.fechaVencimiento
+            ? new Date(
+                producto.fechaVencimiento
+              ).toLocaleDateString()
+            : "N/A"}
+        </td>
 
-                      <td>
-                        {producto.fechaVencimiento
-                          ? new Date(
-                              producto.fechaVencimiento
-                            ).toLocaleDateString()
-                          : "N/A"}
-                      </td>
+        <td>
+          {badgeEstado(producto)}
+        </td>
+      </tr>
+    );
+  })}
+</tbody>
 
-                      <td>
-                        {badgeEstado(producto)}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
+</table>
+</div>
+</div>
+</div>
 
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+</div>
+);
 }
-```
