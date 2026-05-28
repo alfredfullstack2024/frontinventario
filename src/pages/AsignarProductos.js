@@ -32,8 +32,7 @@ export default function AsignarProductos() {
   const [fechaVencimiento, setFechaVencimiento] = useState("");
   const [numeroRemisionFactura, setNumeroRemisionFactura] = useState("");
 
-    // Captura errores en pantalla
-  const [debugInfo, setDebugInfo] = useState("");
+    
   
   useEffect(() => {
     cargarCategorias();
@@ -52,13 +51,13 @@ export default function AsignarProductos() {
   const buscarCodigo = async (codigo) => {
     try {
       setError("");
-      setDebugInfo("Buscando: " + codigo);
+      
 
       const codigoLimpio = codigo.trim();
       const res = await api.get(`/codigos/${encodeURIComponent(codigoLimpio)}`);
       const codigoEncontrado = res.data;
 
-      setDebugInfo("Encontrado: " + JSON.stringify(codigoEncontrado).substring(0, 100));
+      
 
       if (codigoEncontrado.estado === "asignado") {
 
@@ -108,7 +107,7 @@ export default function AsignarProductos() {
 
     console.log("Código detectado:", codigoLimpio);
 
-    setDebugInfo("✅ Escaneado: " + codigoLimpio);
+    
 
     setExito(`✅ Código ${codigoLimpio} escaneado`);
 
@@ -263,11 +262,7 @@ export default function AsignarProductos() {
               <h2 className="mb-0">📱 Asignar Productos a Códigos</h2>
             </div>
                        <div className="card-body">
-              {debugInfo && (
-                <div className="alert alert-warning" style={{fontSize:"12px", wordBreak:"break-all"}}>
-                  {debugInfo}
-                </div>
-              )}
+              
               <p className="text-muted mb-4">
                 Escanea un código generado para asignarle la información del
                 producto
