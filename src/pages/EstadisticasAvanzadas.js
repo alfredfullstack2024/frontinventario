@@ -37,9 +37,9 @@ export default function EstadisticasAvanzadas() {
     proximosVencer: [],
   });
 
-  const [categorias, setCategorias] = useState([]);
+  const [, setCategorias] = useState([]);
 
-  const [filtros, setFiltros] = useState({
+  const [filtros] = useState({
     categoria: "",
     ubicacion: "",
     precioMinimo: "",
@@ -49,9 +49,11 @@ export default function EstadisticasAvanzadas() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    cargarDatos();
-    cargarCategorias();
-  }, []);
+  cargarDatos();
+  cargarCategorias();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
   const cargarCategorias = async () => {
     try {
