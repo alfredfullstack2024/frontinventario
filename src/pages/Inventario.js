@@ -12,10 +12,15 @@ export default function Inventario() {
 
   const [cantidadEntrada, setCantidadEntrada] = useState(1);
 
-  const [observacionEntrada, setObservacionEntrada] = useState("");
+const [observacionEntrada, setObservacionEntrada] = useState("");
 
-  const [procesandoEntrada, setProcesandoEntrada] = useState(false);
+const [numeroLoteEntrada, setNumeroLoteEntrada] = useState("");
 
+const [fechaVencimientoEntrada, setFechaVencimientoEntrada] = useState("");
+
+const [numeroFacturaEntrada, setNumeroFacturaEntrada] = useState("");
+
+const [procesandoEntrada, setProcesandoEntrada] = useState(false);
   const [cantidadSalida, setCantidadSalida] = useState(1);
 
   const [motivoSalida, setMotivoSalida] = useState("");
@@ -76,14 +81,21 @@ export default function Inventario() {
     setMostrarModalSalida(true);
   };
   const abrirModalEntrada = (codigo) => {
-    setCodigoSeleccionado(codigo);
 
-    setCantidadEntrada(1);
+  setCodigoSeleccionado(codigo);
 
-    setObservacionEntrada("");
+  setCantidadEntrada(1);
 
-    setMostrarModalEntrada(true);
-  };
+  setObservacionEntrada("");
+
+  setNumeroLoteEntrada("");
+
+  setFechaVencimientoEntrada("");
+
+  setNumeroFacturaEntrada("");
+
+  setMostrarModalEntrada(true);
+};
   const formatearFecha = (fecha) => {
     if (!fecha) return "N/A";
     return new Date(fecha).toLocaleDateString("es-ES", {
@@ -189,12 +201,20 @@ export default function Inventario() {
       setProcesandoEntrada(true);
 
       await api.post("https://backinventario-wns5.onrender.com/api/lotes/entrada", {
-        codigoId: codigoSeleccionado._id,
 
-        cantidad: Number(cantidadEntrada),
+  codigoId: codigoSeleccionado._id,
 
-        observacion: observacionEntrada,
-      });
+  cantidad: Number(cantidadEntrada),
+
+  observacion: observacionEntrada,
+
+  numeroLote: numeroLoteEntrada,
+
+  fechaVencimiento: fechaVencimientoEntrada,
+
+  numeroRemisionFactura: numeroFacturaEntrada,
+
+});
 
       setMostrarModalEntrada(false);
 
@@ -721,55 +741,126 @@ Vence en ${dias} días
               </div>
 
               <div className="modal-body">
-                <div className="mb-3">
-                  <label className="form-label fw-bold">Producto</label>
 
-                  <input
-                    type="text"
-                    className="form-control"
-                    disabled
-                    value={codigoSeleccionado.producto?.nombre || ""}
-                  />
-                </div>
+  <div className="mb-3">
+    <label className="form-label fw-bold">
+      Producto
+    </label>
 
-                <div className="mb-3">
-                  <label className="form-label fw-bold">Stock Actual</label>
+    <input
+      type="text"
+      className="form-control"
+      disabled
+      value={codigoSeleccionado.producto?.nombre || ""}
+    />
+  </div>
 
-                  <input
-                    type="number"
-                    className="form-control"
-                    disabled
-                    value={codigoSeleccionado.producto?.stock || 0}
-                  />
-                </div>
+  <div className="mb-3">
+    <label className="form-label fw-bold">
+      Stock Actual
+    </label>
 
-                <div className="mb-3">
-                  <label className="form-label fw-bold">Cantidad Entrada</label>
+    <input
+      type="number"
+      className="form-control"
+      disabled
+      value={codigoSeleccionado.producto?.stock || 0}
+    />
+  </div>
 
-                  <input
-                    type="number"
-                    min="1"
-                    className="form-control"
-                    value={cantidadEntrada}
-                    onChange={(e) => setCantidadEntrada(e.target.value)}
-                  />
-                </div>
+  <div className="mb-3">
+    <label className="form-label fw-bold">
+      Cantidad Entrada
+    </label>
 
-                <div className="mb-3">
-                  <label className="form-label fw-bold">Observación</label>
+    <input
+      type="number"
+      min="1"
+      className="form-control"
+      value={cantidadEntrada}
+      onChange={(e) => setCantidadEntrada(e.target.value)}
+    />
+  </div>
 
-                  <textarea
-                    className="form-control"
-                    rows="3"
-                    value={observacionEntrada}
-                    onChange={(e) => setObservacionEntrada(e.target.value)}
-                  />
-                </div>
+  <hr />
 
-                <div className="alert alert-info">
-                  📅 Este ingreso generará automáticamente vencimiento a 180
-                  días.
-                </div>
+  <h6 className="fw-bold mb-3">
+    📦 Información del Nuevo Lote
+  </h6>
+
+  <div className="mb-3">
+    <label className="form-label fw-bold">
+      Número de Lote
+    </label>
+
+    <input
+      type="text"
+      className="form-control"
+      value={numeroLoteEntrada}
+      onChange={(e) =>
+        setNumeroLoteEntrada(e.target.value)
+      }
+      placeholder="Ej: LOT-2026-001"
+    />
+  </div>
+
+  <div className="mb-3">
+    <label className="form-label fw-bold">
+      Fecha de Vencimiento
+    </label>
+
+    <input
+      type="date"
+      className="form-control"
+      value={fechaVencimientoEntrada}
+      onChange={(e) =>
+        setFechaVencimientoEntrada(e.target.value)
+      }
+    />
+  </div>
+
+  <div className="mb-3">
+    <label className="form-label fw-bold">
+      Remisión / Factura
+    </label>
+
+    <input
+      type="text"
+      className="form-control"
+      value={numeroFacturaEntrada}
+      onChange={(e) =>
+        setNumeroFacturaEntrada(e.target.value)
+      }
+      placeholder="Ej: FAC-2026-001"
+    />
+  </div>
+
+  <div className="mb-3">
+    <label className="form-label fw-bold">
+      Observación
+    </label>
+
+    <textarea
+      className="form-control"
+      rows="3"
+      value={observacionEntrada}
+      onChange={(e) =>
+        setObservacionEntrada(e.target.value)
+      }
+    />
+  </div>
+
+  <div className="alert alert-info">
+  📦 Cada entrada puede registrar un lote,
+  vencimiento y factura diferente para mantener
+  trazabilidad completa.
+
+  <hr />
+
+  📅 Este ingreso generará automáticamente
+  seguimiento de vencimiento y trazabilidad
+  histórica del lote.
+</div>
               </div>
 
               <div className="modal-footer">
@@ -842,7 +933,10 @@ Vence en ${dias} días
                           <th>Stock</th>
                           <th>Motivo</th>
                           <th>Observación</th>
-                          <th>Fecha</th>
+<th>Lote</th>
+<th>Vencimiento</th>
+<th>Factura</th>
+<th>Fecha</th>
                         </tr>
                       </thead>
 
@@ -867,11 +961,29 @@ Vence en ${dias} días
 
                             <td>{mov.motivo || "N/A"}</td>
 
-                            <td>{mov.observacion || "N/A"}</td>
+                           <td>{mov.observacion || "N/A"}</td>
 
-                            <td>
-                              <small>{formatearFecha(mov.createdAt)}</small>
-                            </td>
+<td>
+  <span className="badge bg-dark">
+    {mov.numeroLote || "N/A"}
+  </span>
+</td>
+
+<td>
+  {mov.fechaVencimiento
+    ? new Date(
+        mov.fechaVencimiento
+      ).toLocaleDateString("es-CO")
+    : "N/A"}
+</td>
+
+<td>
+  {mov.numeroRemisionFactura || "N/A"}
+</td>
+
+<td>
+  <small>{formatearFecha(mov.createdAt)}</small>
+</td>
                           </tr>
                         ))}
                       </tbody>
