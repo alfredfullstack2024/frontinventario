@@ -26,6 +26,9 @@ const [procesandoEntrada, setProcesandoEntrada] = useState(false);
   const [motivoSalida, setMotivoSalida] = useState("");
 
   const [observacionSalida, setObservacionSalida] = useState("");
+  const [loteSeleccionado, setLoteSeleccionado] = useState("");
+
+const [infoLoteSeleccionado, setInfoLoteSeleccionado] = useState(null);
 
   const [procesandoSalida, setProcesandoSalida] = useState(false);
   const [movimientosCodigo, setMovimientosCodigo] = useState([]);
@@ -71,15 +74,22 @@ const [procesandoEntrada, setProcesandoEntrada] = useState(false);
   const mostrarDetalle = (codigo) => {
     setCodigoSeleccionado(codigo);
   };
-  const abrirModalSalida = (codigo) => {
-    setCodigoSeleccionado(codigo);
+const abrirModalSalida = (codigo) => {
 
-    setCantidadSalida(1);
-    setMotivoSalida("");
-    setObservacionSalida("");
+  setCodigoSeleccionado(codigo);
 
-    setMostrarModalSalida(true);
-  };
+  setCantidadSalida(1);
+
+  setMotivoSalida("");
+
+  setObservacionSalida("");
+
+  setLoteSeleccionado("");
+
+  setInfoLoteSeleccionado(null);
+
+  setMostrarModalSalida(true);
+};
   const abrirModalEntrada = (codigo) => {
 
   setCodigoSeleccionado(codigo);
@@ -164,24 +174,46 @@ const [procesandoEntrada, setProcesandoEntrada] = useState(false);
 
     return Math.ceil(diferencia / (1000 * 60 * 60 * 24));
   };
+const seleccionarLote = (loteId) => {
 
+  setLoteSeleccionado(loteId);
+
+  const lote = codigoSeleccionado.lotes?.find(
+    (l) => l._id === loteId
+  );
+
+  setInfoLoteSeleccionado(lote || null);
+};
   
-  const registrarSalida = async () => {
-    try {
-      if (!motivoSalida.trim()) {
-        alert("Debes ingresar un motivo");
-        return;
-      }
+ const registrarSalida = async () => {
+  try {
 
-      setProcesandoSalida(true);
+    if (!motivoSalida.trim()) {
+      alert("Debes ingresar un motivo");
+      return;
+    }
 
+    if (!loteSeleccionado) {
+      alert("Debes seleccionar un lote");
+      return;
+    }
+
+    setProcesandoSalida(true);
       await api.post("https://backinventario-wns5.onrender.com/api/movimientos", {
-        codigoId: codigoSeleccionado._id,
-        tipo: "salida",
-        cantidad: Number(cantidadSalida),
-        motivo: motivoSalida,
-        observacion: observacionSalida,
-      });
+
+  codigoId: codigoSeleccionado._id,
+
+  loteId: loteSeleccionado,
+
+  tipo: "salida",
+
+  cantidad: Number(cantidadSalida),
+
+  motivo: motivoSalida,
+
+  observacion: observacionSalida,
+
+});
 
       setMostrarModalSalida(false);
 
@@ -665,7 +697,70 @@ Vence en ${dias} días
                     value={codigoSeleccionado.producto?.stock || 0}
                   />
                 </div>
+<div className="mb-3">
 
+  <label className="form-label fw-bold">
+    Seleccionar Lote
+  </label>
+
+  <select
+    className="form-control"
+    value={loteSeleccionado}
+    onChange={(e) => seleccionarLote(e.target.value)}
+  >
+
+    <option value="">
+      Seleccione un lote
+    </option>
+
+    {codigoSeleccionado.lotes
+      ?.filter((lote) => lote.stockDisponible > 0)
+      .map((lote) => (
+
+        <option key={lote._id} value={lote._id}>
+
+          {lote.numeroLote || "SIN LOTE"} | Stock:
+          {" "}
+          {lote.stockDisponible}
+          {" "}
+          | Vence:
+          {" "}
+          {lote.fechaVencimiento
+            ? new Date(
+                lote.fechaVencimiento
+              ).toLocaleDateString("es-CO")
+            : "N/A"}
+
+        </option>
+      ))}
+  </select>
+</div>
+    {infoLoteSeleccionado && (
+
+  <div className="alert alert-warning">
+
+    <strong>Lote:</strong>
+    {" "}
+    {infoLoteSeleccionado.numeroLote || "N/A"}
+
+    <br />
+
+    <strong>Stock Disponible:</strong>
+    {" "}
+    {infoLoteSeleccionado.stockDisponible}
+
+    <br />
+
+    <strong>Vencimiento:</strong>
+    {" "}
+    {infoLoteSeleccionado.fechaVencimiento
+      ? new Date(
+          infoLoteSeleccionado.fechaVencimiento
+        ).toLocaleDateString("es-CO")
+      : "N/A"}
+
+  </div>
+)}
                 <div className="mb-3">
                   <label className="form-label fw-bold">Cantidad Salida</label>
 
