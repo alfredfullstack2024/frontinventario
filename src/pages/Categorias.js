@@ -57,7 +57,7 @@ export default function Categorias() {
     }
 
     try {
-      await axios.delete(`http://localhost:4000/api/categorias/${id}`);
+      await axios.delete(`https://backinventario-wns5.onrender.com/api/categorias/${id}`);
       cargar();
       alert(`✅ Categoría "${nombreCategoria}" eliminada correctamente`);
     } catch (error) {
