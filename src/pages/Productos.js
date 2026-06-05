@@ -23,7 +23,7 @@ export default function Productos() {
   // Cargar el reporte de productos por categoría
   const cargarProductos = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/reporte");
+      const res = await axios.get("https://backinventario-wns5.onrender.com/api/reporte");
       setProductos(res.data);
     } catch (error) {
       console.error("Error cargando productos:", error);
