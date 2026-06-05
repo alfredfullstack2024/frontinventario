@@ -37,7 +37,7 @@ export default function Productos() {
     if (!nombre.trim() || !categoria || cantidad <= 0) return;
 
     try {
-      const res = await axios.post("http://localhost:4000/api/productos", {
+      const res = await axios.post("https://backinventario-wns5.onrender.com/api/productos", {
         nombre,
         categoria,
         cantidad,
@@ -124,14 +124,14 @@ export default function Productos() {
                 <p className="font-semibold mb-2">{prod.nombre}</p>
                 <p className="text-sm text-gray-600 mb-2">{prod.codigo}</p>
                 <img
-                  src={`http://localhost:4000/api/productos/${prod.codigo}/barcode`}
+                  src={`https://backinventario-wns5.onrender.com/api/productos/${prod.codigo}/barcode`}
                   alt={`Código ${prod.codigo}`}
                   className="mx-auto border"
                 />
                 <button
                   onClick={() =>
                     window.open(
-                      `http://localhost:4000/api/productos/${prod.codigo}/barcode`
+                      `https://backinventario-wns5.onrender.com/api/productos/${prod.codigo}/barcode`
                     )
                   }
                   className="mt-2 text-sm bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
