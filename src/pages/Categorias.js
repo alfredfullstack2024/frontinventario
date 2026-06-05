@@ -29,7 +29,7 @@ export default function Categorias() {
 
     setCreando(true);
     try {
-      await axios.post("http://localhost:4000/api/categorias", {
+      await axios.post("https://backinventario-wns5.onrender.com/api/categorias", {
         nombre: nombre.trim(),
       });
       setNombre("");
