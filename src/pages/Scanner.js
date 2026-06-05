@@ -101,7 +101,7 @@ export default function Scanner() {
               <strong>Código de barras:</strong>
             </p>
             <img
-              src={`http://localhost:4000/api/productos/${producto.codigo}/barcode`}
+              src={`https://backinventario-wns5.onrender.com/api/productos/${producto.codigo}/barcode`}
               alt={`Código de barras ${producto.codigo}`}
               className="mt-2 border"
             />
