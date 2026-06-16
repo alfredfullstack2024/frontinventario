@@ -19,6 +19,9 @@ const [numeroLoteEntrada, setNumeroLoteEntrada] = useState("");
 const [fechaVencimientoEntrada, setFechaVencimientoEntrada] = useState("");
 
 const [numeroFacturaEntrada, setNumeroFacturaEntrada] = useState("");
+  const [refCajaEntrada, setRefCajaEntrada] = useState("");
+
+const [refTarroEntrada, setRefTarroEntrada] = useState("");
 
 const [procesandoEntrada, setProcesandoEntrada] = useState(false);
   const [cantidadSalida, setCantidadSalida] = useState(1);
@@ -103,6 +106,9 @@ const abrirModalSalida = (codigo) => {
   setFechaVencimientoEntrada("");
 
   setNumeroFacturaEntrada("");
+    setRefCajaEntrada("");
+
+setRefTarroEntrada("");
 
   setMostrarModalEntrada(true);
 };
@@ -245,7 +251,8 @@ const seleccionarLote = (loteId) => {
   fechaVencimiento: fechaVencimientoEntrada,
 
   numeroRemisionFactura: numeroFacturaEntrada,
-
+refCaja: refCajaEntrada,
+  refTarro: refTarroEntrada,
 });
 
       setMostrarModalEntrada(false);
@@ -898,6 +905,33 @@ Vence en ${dias} días
       placeholder="Ej: LOT-2026-001"
     />
   </div>
+        <div className="mb-3">
+  <label className="form-label fw-bold">
+    REF Caja
+  </label>
+
+  <input
+    type="text"
+    className="form-control"
+    value={refCajaEntrada}
+    onChange={(e) => setRefCajaEntrada(e.target.value)}
+    placeholder="Opcional"
+  />
+</div>
+
+<div className="mb-3">
+  <label className="form-label fw-bold">
+    REF Tarro
+  </label>
+
+  <input
+    type="text"
+    className="form-control"
+    value={refTarroEntrada}
+    onChange={(e) => setRefTarroEntrada(e.target.value)}
+    placeholder="Opcional"
+  />
+</div>
 
   <div className="mb-3">
     <label className="form-label fw-bold">
