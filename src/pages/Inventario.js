@@ -285,6 +285,27 @@ refCaja: refCajaEntrada,
         `https://backinventario-wns5.onrender.com/api/movimientos/${codigo._id}`,
       );
 
+      const abrirLotes = async (codigo) => {
+  try {
+    setCodigoSeleccionado(codigo);
+
+    setMostrarLotes(true);
+
+    setCargandoLotes(true);
+
+    const res = await api.get(
+      `https://backinventario-wns5.onrender.com/api/lotes/codigo/${codigo._id}`
+    );
+
+    setLotesCodigo(res.data);
+  } catch (error) {
+    console.error(error);
+
+    alert("Error cargando lotes");
+  } finally {
+    setCargandoLotes(false);
+  }
+};
       setMovimientosCodigo(res.data);
     } catch (error) {
       console.error(error);
@@ -466,12 +487,19 @@ Vence en ${dias} días
                             >
                               📜 Historial
                             </button>
+                                <button
+  onClick={() => abrirLotes(codigo)}
+  className="btn btn-sm btn-outline-warning me-2"
+>
+  📦 Lotes
+</button>
                             <a
                               href={`https://backinventario-wns5.onrender.com/api/barcode/${codigo.codigo}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="btn btn-sm btn-outline-secondary"
                             >
+                                
                               🖨️ Código
                             </a>
                           </td>
