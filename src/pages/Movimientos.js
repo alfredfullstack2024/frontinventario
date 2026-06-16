@@ -75,18 +75,21 @@ export default function Movimientos() {
           ) : (
             <div className="table-responsive">
               <table className="table table-hover table-striped">
-                <thead className="table-dark">
-                  <tr>
-                    <th>Tipo</th>
-                    <th>Código</th>
-                    <th>Producto</th>
-                    <th>Usuario</th>
-                    <th>Cantidad</th>
-                    <th>Stock</th>
-                    <th>Motivo</th>
-                    <th>Fecha</th>
-                  </tr>
-                </thead>
+               <thead className="table-dark">
+  <tr>
+    <th>Tipo</th>
+    <th>Código</th>
+    <th>Producto</th>
+    <th>Usuario</th>
+    <th>Lote</th>
+    <th>Factura</th>
+    <th>Vencimiento</th>
+    <th>Cantidad</th>
+    <th>Stock</th>
+    <th>Motivo</th>
+    <th>Fecha</th>
+  </tr>
+</thead>
 
                 <tbody>
                   {movimientos.map((mov) => (
