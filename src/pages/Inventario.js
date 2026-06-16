@@ -37,6 +37,11 @@ const [infoLoteSeleccionado, setInfoLoteSeleccionado] = useState(null);
   const [movimientosCodigo, setMovimientosCodigo] = useState([]);
 
   const [mostrarHistorial, setMostrarHistorial] = useState(false);
+  const [mostrarLotes, setMostrarLotes] = useState(false);
+
+const [lotesCodigo, setLotesCodigo] = useState([]);
+
+const [cargandoLotes, setCargandoLotes] = useState(false);
 
   const [cargandoHistorial, setCargandoHistorial] = useState(false);
 
