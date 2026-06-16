@@ -273,19 +273,29 @@ refCaja: refCajaEntrada,
       setProcesandoEntrada(false);
     }
   };
-  const abrirHistorial = async (codigo) => {
-    try {
-      setCodigoSeleccionado(codigo);
+ const abrirHistorial = async (codigo) => {
+  try {
+    setCodigoSeleccionado(codigo);
 
-      setMostrarHistorial(true);
+    setMostrarHistorial(true);
 
-      setCargandoHistorial(true);
+    setCargandoHistorial(true);
 
-      const res = await api.get(
-        `https://backinventario-wns5.onrender.com/api/movimientos/${codigo._id}`,
-      );
+    const res = await api.get(
+      `https://backinventario-wns5.onrender.com/api/movimientos/${codigo._id}`,
+    );
 
-      const abrirLotes = async (codigo) => {
+    setMovimientosCodigo(res.data);
+  } catch (error) {
+    console.error(error);
+
+    alert("Error cargando historial");
+  } finally {
+    setCargandoHistorial(false);
+  }
+};
+
+  const abrirLotes = async (codigo) => {
   try {
     setCodigoSeleccionado(codigo);
 
@@ -306,15 +316,6 @@ refCaja: refCajaEntrada,
     setCargandoLotes(false);
   }
 };
-      setMovimientosCodigo(res.data);
-    } catch (error) {
-      console.error(error);
-
-      alert("Error cargando historial");
-    } finally {
-      setCargandoHistorial(false);
-    }
-  };
   return (
     <div className="container mt-4">
       <div className="row">
@@ -1095,10 +1096,7 @@ Vence en ${dias} días
                           <th>Stock</th>
                           <th>Motivo</th>
                           <th>Observación</th>
-<th>Lote</th>
-<th>Vencimiento</th>
-<th>Factura</th>
-<th>Fecha</th>
+                          <th>Fecha</th>
                         </tr>
                       </thead>
 
@@ -1125,23 +1123,6 @@ Vence en ${dias} días
 
                            <td>{mov.observacion || "N/A"}</td>
 
-<td>
-  <span className="badge bg-dark">
-    {mov.numeroLote || "N/A"}
-  </span>
-</td>
-
-<td>
-  {mov.fechaVencimiento
-    ? new Date(
-        mov.fechaVencimiento
-      ).toLocaleDateString("es-CO")
-    : "N/A"}
-</td>
-
-<td>
-  {mov.numeroRemisionFactura || "N/A"}
-</td>
 
 <td>
   <small>{formatearFecha(mov.createdAt)}</small>
