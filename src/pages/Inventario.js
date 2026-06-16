@@ -2,49 +2,34 @@ import { useState, useEffect, useCallback } from "react";
 import api from "../services/api";
 
 export default function Inventario() {
-  const [codigos, setCodigos] = useState([]);
-  const [filtro, setFiltro] = useState("todos");
-  const [busqueda, setBusqueda] = useState("");
-  const [, setLoading] = useState(true);
-  const [codigoSeleccionado, setCodigoSeleccionado] = useState(null);
-  const [mostrarModalSalida, setMostrarModalSalida] = useState(false);
-  const [mostrarModalEntrada, setMostrarModalEntrada] = useState(false);
-
-  const [cantidadEntrada, setCantidadEntrada] = useState(1);
-
+const [codigos, setCodigos] = useState([]);
+const [filtro, setFiltro] = useState("todos");
+const [busqueda, setBusqueda] = useState("");
+const [, setLoading] = useState(true);
+const [codigoSeleccionado, setCodigoSeleccionado] = useState(null);
+const [mostrarModalSalida, setMostrarModalSalida] = useState(false);
+const [mostrarModalEntrada, setMostrarModalEntrada] = useState(false);
+const [cantidadEntrada, setCantidadEntrada] = useState(1);
 const [observacionEntrada, setObservacionEntrada] = useState("");
-
 const [numeroLoteEntrada, setNumeroLoteEntrada] = useState("");
-
 const [fechaVencimientoEntrada, setFechaVencimientoEntrada] = useState("");
-
 const [numeroFacturaEntrada, setNumeroFacturaEntrada] = useState("");
-  const [refCajaEntrada, setRefCajaEntrada] = useState("");
-
+const [refCajaEntrada, setRefCajaEntrada] = useState("");
 const [refTarroEntrada, setRefTarroEntrada] = useState("");
-
 const [procesandoEntrada, setProcesandoEntrada] = useState(false);
-  const [cantidadSalida, setCantidadSalida] = useState(1);
-
-  const [motivoSalida, setMotivoSalida] = useState("");
-
-  const [observacionSalida, setObservacionSalida] = useState("");
-  const [loteSeleccionado, setLoteSeleccionado] = useState("");
-
+const [cantidadSalida, setCantidadSalida] = useState(1);
+const [motivoSalida, setMotivoSalida] = useState("");
+const [observacionSalida, setObservacionSalida] = useState("");
+const [loteSeleccionado, setLoteSeleccionado] = useState("");
 const [infoLoteSeleccionado, setInfoLoteSeleccionado] = useState(null);
-
-  const [procesandoSalida, setProcesandoSalida] = useState(false);
-  const [movimientosCodigo, setMovimientosCodigo] = useState([]);
-
-  const [mostrarHistorial, setMostrarHistorial] = useState(false);
-  const [mostrarLotes, setMostrarLotes] = useState(false);
-
+const [procesandoSalida, setProcesandoSalida] = useState(false);
+const [movimientosCodigo, setMovimientosCodigo] = useState([]);
+const [mostrarHistorial, setMostrarHistorial] = useState(false);
+const [mostrarLotes, setMostrarLotes] = useState(false);
 const [lotesCodigo, setLotesCodigo] = useState([]);
-
 const [cargandoLotes, setCargandoLotes] = useState(false);
-
-  const [cargandoHistorial, setCargandoHistorial] = useState(false);
-
+const [cargandoHistorial, setCargandoHistorial] = useState(false);
+const [mostrarDetalleModal, setMostrarDetalleModal] = useState(false);
   const cargarCodigos = useCallback(async () => {
     try {
       setLoading(true);
@@ -79,9 +64,10 @@ const [cargandoLotes, setCargandoLotes] = useState(false);
     );
   });
 
-  const mostrarDetalle = (codigo) => {
-    setCodigoSeleccionado(codigo);
-  };
+ const mostrarDetalle = (codigo) => {
+  setCodigoSeleccionado(codigo);
+  setMostrarDetalleModal(true);
+};
 const abrirModalSalida = (codigo) => {
 
   setCodigoSeleccionado(codigo);
@@ -522,7 +508,7 @@ Vence en ${dias} días
       </div>
 
       {/* Modal de detalle */}
-      {codigoSeleccionado && (
+      {mostrarDetalleModal && codigoSeleccionado && (
         <div
           className="modal show d-block"
           style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
@@ -536,7 +522,10 @@ Vence en ${dias} días
                 <button
                   type="button"
                   className="btn-close btn-close-white"
-                  onClick={() => setCodigoSeleccionado(null)}
+                  onClick={() => {
+  setMostrarDetalleModal(false);
+  setCodigoSeleccionado(null);
+}}
                 ></button>
               </div>
               <div className="modal-body">
@@ -1046,6 +1035,7 @@ Vence en ${dias} días
           </div>
         </div>
       )}
+{/* MODAL HISTORIAL */}
       {mostrarHistorial && codigoSeleccionado && (
         <div
           className="modal show d-block"
@@ -1143,6 +1133,133 @@ Vence en ${dias} días
                   Cerrar
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+              {/* MODAL LOTES */}
+      {mostrarLotes && codigoSeleccionado && (
+        <div
+          className="modal show d-block"
+          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+          <div className="modal-dialog modal-xl">
+            <div className="modal-content">
+
+              <div className="modal-header bg-warning">
+                <h5 className="modal-title">
+                  📦 Historial de Lotes
+                  {codigoSeleccionado?.producto?.nombre && (
+                    <span className="ms-2 text-dark">
+                      - {codigoSeleccionado.producto.nombre}
+                    </span>
+                  )}
+                </h5>
+
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setMostrarLotes(false)}
+                />
+              </div>
+
+              <div className="modal-body">
+
+                {cargandoLotes ? (
+                  <div className="text-center py-5">
+                    <div className="spinner-border text-warning" />
+                  </div>
+                ) : lotesCodigo.length === 0 ? (
+
+                  <div className="alert alert-info">
+                    No existen lotes registrados para este producto.
+                  </div>
+
+                ) : (
+
+                  <div className="table-responsive">
+
+                    <table className="table table-striped table-hover">
+
+                      <thead className="table-dark">
+                        <tr>
+                          <th>Lote</th>
+                          <th>REF Caja</th>
+                          <th>REF Tarro</th>
+                          <th>Disponible</th>
+                          <th>Vencimiento</th>
+                          <th>Factura</th>
+                          <th>Usuario</th>
+                          <th>Fecha Entrada</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {lotesCodigo.map((lote) => (
+                          <tr key={lote._id}>
+
+                            <td>
+                              <span className="badge bg-dark">
+                                {lote.numeroLote || "N/A"}
+                              </span>
+                            </td>
+
+                            <td>
+                              {lote.refCaja || "N/A"}
+                            </td>
+
+                            <td>
+                              {lote.refTarro || "N/A"}
+                            </td>
+
+                            <td>
+                              <span className="badge bg-success">
+                                {lote.stockDisponible}
+                              </span>
+                            </td>
+
+                            <td>
+                              {lote.fechaVencimiento
+                                ? new Date(
+                                    lote.fechaVencimiento
+                                  ).toLocaleDateString("es-CO")
+                                : "N/A"}
+                            </td>
+
+                            <td>
+                              {lote.numeroRemisionFactura || "N/A"}
+                            </td>
+
+                            <td>
+                              <span className="badge bg-info">
+                                👤 {lote.usuario?.nombre || "Sistema"}
+                              </span>
+                            </td>
+
+                            <td>
+                              {formatearFecha(lote.fechaEntrada)}
+                            </td>
+
+                          </tr>
+                        ))}
+                      </tbody>
+
+                    </table>
+
+                  </div>
+
+                )}
+              </div>
+
+              <div className="modal-footer">
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setMostrarLotes(false)}
+                >
+                  Cerrar
+                </button>
+              </div>
+
             </div>
           </div>
         </div>
