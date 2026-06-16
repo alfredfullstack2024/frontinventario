@@ -27,7 +27,9 @@ export default function AsignarProductos() {
 
   const [cantidadMinimaMensual, setCantidadMinimaMensual] = useState("");
   const [cantidadMaximaMensual, setCantidadMaximaMensual] = useState("");
+const [diasAlertaAmarillo, setDiasAlertaAmarillo] = useState("");
 
+const [diasAlertaRojo, setDiasAlertaRojo] = useState("");
   const [numeroLote, setNumeroLote] = useState("");
   const [fechaVencimiento, setFechaVencimiento] = useState("");
   const [numeroRemisionFactura, setNumeroRemisionFactura] = useState("");
@@ -147,12 +149,18 @@ export default function AsignarProductos() {
   const asignarProducto = async (e) => {
     e.preventDefault();
     if (!codigoActual || !codigoActual.codigo || !nombre.trim()) {
-      setError("❌ Código inválido o faltan datos");
+  setError("❌ Código inválido o faltan datos");
 
-      console.error("codigoActual inválido:", codigoActual);
+  console.error("codigoActual inválido:", codigoActual);
 
-      return;
-    }
+  return;
+}
+
+if (!diasAlertaAmarillo || !diasAlertaRojo) {
+  setError("❌ Debe configurar los días del semáforo");
+
+  return;
+}
 
     try {
       console.log("ANTES PUT:", codigoActual);
@@ -177,8 +185,16 @@ export default function AsignarProductos() {
         cantidadMaximaMensual,
 
         numeroLote,
-        fechaVencimiento,
-        numeroRemisionFactura,
+fechaVencimiento,
+numeroRemisionFactura,
+
+diasAlertaAmarillo: parseInt(
+  diasAlertaAmarillo
+),
+
+diasAlertaRojo: parseInt(
+  diasAlertaRojo
+),
       });
       const res = await api.put(`/codigos/${codigoActual.codigo}/asignar`, {
         // Información principal
@@ -206,9 +222,14 @@ export default function AsignarProductos() {
           : 0,
 
         // Información lote
-        numeroLote,
-        fechaVencimiento,
-        numeroRemisionFactura,
+numeroLote,
+fechaVencimiento,
+numeroRemisionFactura,
+
+// Configuración semáforo
+diasAlertaAmarillo: parseInt(diasAlertaAmarillo),
+
+diasAlertaRojo: parseInt(diasAlertaRojo),
       });
 
       setExito(
@@ -242,6 +263,9 @@ export default function AsignarProductos() {
     setNumeroLote("");
     setFechaVencimiento("");
     setNumeroRemisionFactura("");
+    setDiasAlertaAmarillo("");
+
+setDiasAlertaRojo("");
   };
 
  const nuevoEscaneo = () => {
@@ -647,6 +671,62 @@ export default function AsignarProductos() {
                               }
                             />
                           </div>
+
+                                <hr />
+
+<h5 className="mb-3">
+  🚦 Configuración del Semáforo
+</h5>
+
+<div className="row">
+
+  <div className="col-md-6">
+    <div className="mb-3">
+      <label className="form-label fw-bold">
+        ⚠️ Días alerta amarilla
+      </label>
+
+      <input
+        type="number"
+        className="form-control"
+        value={diasAlertaAmarillo}
+        onChange={(e) =>
+          setDiasAlertaAmarillo(e.target.value)
+        }
+        min="1"
+        required
+      />
+
+      <small className="text-muted">
+        Ejemplo: 180
+      </small>
+    </div>
+  </div>
+
+  <div className="col-md-6">
+    <div className="mb-3">
+      <label className="form-label fw-bold">
+        🔴 Días alerta roja
+      </label>
+
+      <input
+        type="number"
+        className="form-control"
+        value={diasAlertaRojo}
+        onChange={(e) =>
+          setDiasAlertaRojo(e.target.value)
+        }
+        min="1"
+        required
+      />
+
+      <small className="text-muted">
+        Ejemplo: 30
+      </small>
+    </div>
+  </div>
+
+</div>
                           <hr className="my-4" />
 
                           <h5 className="mb-3">
