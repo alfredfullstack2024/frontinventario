@@ -33,7 +33,8 @@ const [diasAlertaRojo, setDiasAlertaRojo] = useState("");
   const [numeroLote, setNumeroLote] = useState("");
   const [fechaVencimiento, setFechaVencimiento] = useState("");
   const [numeroRemisionFactura, setNumeroRemisionFactura] = useState("");
-
+const [refCaja, setRefCaja] = useState("");
+const [refTarro, setRefTarro] = useState("");
     
   
   useEffect(() => {
@@ -187,6 +188,8 @@ if (!diasAlertaAmarillo || !diasAlertaRojo) {
         numeroLote,
 fechaVencimiento,
 numeroRemisionFactura,
+        refCaja,
+refTarro,
 
 diasAlertaAmarillo: parseInt(
   diasAlertaAmarillo
@@ -249,7 +252,7 @@ diasAlertaRojo: parseInt(diasAlertaRojo),
     setPrecio("");
     setCategoria("");
     setUbicacion("");
-    setStock(1);
+    setStock();
 
     setReferencia("");
     setPresentacion("");
@@ -263,6 +266,9 @@ diasAlertaRojo: parseInt(diasAlertaRojo),
     setNumeroLote("");
     setFechaVencimiento("");
     setNumeroRemisionFactura("");
+    setRefCaja("");
+
+setRefTarro("");
     setDiasAlertaAmarillo("");
 
 setDiasAlertaRojo("");
@@ -780,10 +786,41 @@ setDiasAlertaRojo("");
                                   value={numeroRemisionFactura}
                                   onChange={(e) =>
                                     setNumeroRemisionFactura(e.target.value)
-                                  }
+                                  }  
                                 />
                               </div>
                             </div>
+                                    <div className="col-md-3">
+  <div className="mb-3">
+    <label className="form-label fw-bold">
+      REF Caja
+    </label>
+
+    <input
+      type="text"
+      className="form-control"
+      value={refCaja}
+      onChange={(e) => setRefCaja(e.target.value)}
+      placeholder="Opcional"
+    />
+  </div>
+</div>
+
+<div className="col-md-3">
+  <div className="mb-3">
+    <label className="form-label fw-bold">
+      REF Tarro
+    </label>
+
+    <input
+      type="text"
+      className="form-control"
+      value={refTarro}
+      onChange={(e) => setRefTarro(e.target.value)}
+      placeholder="Opcional"
+    />
+  </div>
+</div>
                           </div>
                           <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button
