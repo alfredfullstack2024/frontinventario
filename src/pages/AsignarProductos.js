@@ -18,7 +18,7 @@ export default function AsignarProductos() {
   const [precio, setPrecio] = useState("");
   const [categoria, setCategoria] = useState("");
   const [ubicacion, setUbicacion] = useState("");
-  const [stock, setStock] = useState(1);
+  const [stock, setStock] = useState();
   const [referencia, setReferencia] = useState("");
   const [presentacion, setPresentacion] = useState("");
   const [marcaFabricante, setMarcaFabricante] = useState("");
