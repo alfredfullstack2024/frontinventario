@@ -425,12 +425,18 @@ Vence en ${dias} días
                                         width: "18px",
                                         height: "18px",
 
-                                        backgroundColor:
-                                          dias <= 15
-                                            ? "#dc3545"
-                                            : dias <= 60
-                                              ? "#ffc107"
-                                              : "#198754",
+                                        const rojo =
+  codigo.producto?.diasAlertaRojo || 30;
+
+const amarillo =
+  codigo.producto?.diasAlertaAmarillo || 180;
+
+backgroundColor:
+  dias <= rojo
+    ? "#dc3545"
+    : dias <= amarillo
+      ? "#ffc107"
+      : "#198754",
                                       }}
                                     />
                                   );
