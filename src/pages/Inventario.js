@@ -408,39 +408,40 @@ refCaja: refCajaEntrada,
                           <td>
                             <div className="d-flex gap-2 flex-wrap">
                               {codigo.lotes?.length > 0 ? (
-                                codigo.lotes.map((lote) => {
-                                  const dias = calcularDiasRestantes(
-                                    lote.fechaVencimiento,
-                                  );
+                               codigo.lotes.map((lote) => {
 
-                                  return (
-                                    <div
-                                      key={lote._id}
-                                      className="rounded-circle"
-                                      title={`
+  const dias = calcularDiasRestantes(
+    lote.fechaVencimiento,
+  );
+
+  const rojo =
+    codigo.producto?.diasAlertaRojo || 30;
+
+  const amarillo =
+    codigo.producto?.diasAlertaAmarillo || 180;
+
+  return (
+    <div
+      key={lote._id}
+      className="rounded-circle"
+      title={`
 Stock: ${lote.stockDisponible}
 Vence en ${dias} días
-  `}
-                                      style={{
-                                        width: "18px",
-                                        height: "18px",
+`}
+      style={{
+        width: "18px",
+        height: "18px",
 
-                                        const rojo =
-  codigo.producto?.diasAlertaRojo || 30;
-
-const amarillo =
-  codigo.producto?.diasAlertaAmarillo || 180;
-
-backgroundColor:
-  dias <= rojo
-    ? "#dc3545"
-    : dias <= amarillo
-      ? "#ffc107"
-      : "#198754",
-                                      }}
-                                    />
-                                  );
-                                })
+        backgroundColor:
+          dias <= rojo
+            ? "#dc3545"
+            : dias <= amarillo
+            ? "#ffc107"
+            : "#198754",
+      }}
+    />
+  );
+})
                               ) : (
                                 <span className="text-muted">N/A</span>
                               )}
