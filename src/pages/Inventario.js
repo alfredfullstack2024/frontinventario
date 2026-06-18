@@ -657,6 +657,25 @@ backgroundColor:
                             {codigoSeleccionado.producto
                               .numeroRemisionFactura || "N/A"}
                           </li>
+                            <li>
+  <strong>REF Caja:</strong>
+  {codigoSeleccionado.producto.refCaja || "N/A"}
+</li>
+
+<li>
+  <strong>REF Tarro:</strong>
+  {codigoSeleccionado.producto.refTarro || "N/A"}
+</li>
+
+<li>
+  <strong>Alerta Amarilla:</strong>
+  {codigoSeleccionado.producto.diasAlertaAmarillo || 180} días
+</li>
+
+<li>
+  <strong>Alerta Roja:</strong>
+  {codigoSeleccionado.producto.diasAlertaRojo || 30} días
+</li>
                         </ul>
                       </>
                     )}
@@ -787,14 +806,24 @@ backgroundColor:
 
     <br />
 
-    <strong>Vencimiento:</strong>
+      <strong>Vencimiento:</strong>
     {" "}
     {infoLoteSeleccionado.fechaVencimiento
       ? new Date(
           infoLoteSeleccionado.fechaVencimiento
         ).toLocaleDateString("es-CO")
       : "N/A"}
+<br />
 
+<strong>REF Caja:</strong>
+{" "}
+{infoLoteSeleccionado.refCaja || "N/A"}
+
+<br />
+
+<strong>REF Tarro:</strong>
+{" "}
+{infoLoteSeleccionado.refTarro || "N/A"}
   </div>
 )}
                 <div className="mb-3">
