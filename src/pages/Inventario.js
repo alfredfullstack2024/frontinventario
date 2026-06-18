@@ -659,7 +659,7 @@ Vence en ${dias} días
                               .numeroRemisionFactura || "N/A"}
                           </li>
                             <li>
- <li>
+ 
   <strong>REF Caja:</strong>
   {codigoSeleccionado.lotes?.[0]?.refCaja || "N/A"}
 </li>
