@@ -200,40 +200,37 @@ diasAlertaRojo: parseInt(
 ),
       });
       const res = await api.put(`/codigos/${codigoActual.codigo}/asignar`, {
-        // Información principal
-        nombre,
-        referencia,
-        presentacion,
-        marcaFabricante,
-        registroInvima,
-        clasificacionRiesgo,
+  nombre,
+  referencia,
+  presentacion,
+  marcaFabricante,
+  registroInvima,
+  clasificacionRiesgo,
 
-        // Información producto
-        descripcion,
-        precio: precio ? parseFloat(precio) : null,
-        categoria: categoria || null,
-        ubicacion,
-        stock: parseInt(stock),
+  descripcion,
+  precio: precio ? parseFloat(precio) : null,
+  categoria: categoria || null,
+  ubicacion,
+  stock: parseInt(stock),
 
-        // Control inventario
-        cantidadMinimaMensual: cantidadMinimaMensual
-          ? parseInt(cantidadMinimaMensual)
-          : 0,
+  cantidadMinimaMensual: cantidadMinimaMensual
+    ? parseInt(cantidadMinimaMensual)
+    : 0,
 
-        cantidadMaximaMensual: cantidadMaximaMensual
-          ? parseInt(cantidadMaximaMensual)
-          : 0,
+  cantidadMaximaMensual: cantidadMaximaMensual
+    ? parseInt(cantidadMaximaMensual)
+    : 0,
 
-        // Información lote
-numeroLote,
-fechaVencimiento,
-numeroRemisionFactura,
+  numeroLote,
+  fechaVencimiento,
+  numeroRemisionFactura,
 
-// Configuración semáforo
-diasAlertaAmarillo: parseInt(diasAlertaAmarillo),
+  refCaja,
+  refTarro,
 
-diasAlertaRojo: parseInt(diasAlertaRojo),
-      });
+  diasAlertaAmarillo: parseInt(diasAlertaAmarillo),
+  diasAlertaRojo: parseInt(diasAlertaRojo),
+});
 
       setExito(
         `✅ Producto "${nombre}" asignado exitosamente al código ${codigoActual.codigo}`,
