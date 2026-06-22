@@ -10,6 +10,7 @@ import Productos from "./pages/Productos"; // Mantener por compatibilidad
 import Movimientos from "./pages/Movimientos";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 import Usuarios from "./pages/Usuarios";
 
 export default function App() {
@@ -160,13 +161,13 @@ export default function App() {
             }
           />
           <Route
-            path="/usuarios"
-            element={
-              <ProtectedRoute>
-                <Usuarios />
-              </ProtectedRoute>
-            }
-          />
+  path="/usuarios"
+  element={
+    <AdminRoute>
+      <Usuarios />
+    </AdminRoute>
+  }
+/>
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>
