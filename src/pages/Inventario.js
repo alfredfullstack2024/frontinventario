@@ -30,6 +30,7 @@ const [lotesCodigo, setLotesCodigo] = useState([]);
 const [cargandoLotes, setCargandoLotes] = useState(false);
 const [cargandoHistorial, setCargandoHistorial] = useState(false);
 const [mostrarDetalleModal, setMostrarDetalleModal] = useState(false);
+  const [precioEntrada, setPrecioEntrada] = useState("");
   const cargarCodigos = useCallback(async () => {
     try {
       setLoading(true);
@@ -97,9 +98,12 @@ const abrirModalSalida = (codigo) => {
   setFechaVencimientoEntrada("");
 
   setNumeroFacturaEntrada("");
-    setRefCajaEntrada("");
 
-setRefTarroEntrada("");
+  setRefCajaEntrada("");
+
+  setRefTarroEntrada("");
+
+  setPrecioEntrada("");
 
   setMostrarModalEntrada(true);
 };
@@ -229,22 +233,28 @@ const seleccionarLote = (loteId) => {
     try {
       setProcesandoEntrada(true);
 
-      await api.post("https://backinventario-wns5.onrender.com/api/lotes/entrada", {
+     await api.post(
+  "https://backinventario-wns5.onrender.com/api/lotes/entrada",
+  {
+    codigoId: codigoSeleccionado._id,
 
-  codigoId: codigoSeleccionado._id,
+    cantidad: Number(cantidadEntrada),
 
-  cantidad: Number(cantidadEntrada),
+    precioUnitario: Number(precioEntrada),
 
-  observacion: observacionEntrada,
+    observacion: observacionEntrada,
 
-  numeroLote: numeroLoteEntrada,
+    numeroLote: numeroLoteEntrada,
 
-  fechaVencimiento: fechaVencimientoEntrada,
+    fechaVencimiento: fechaVencimientoEntrada,
 
-  numeroRemisionFactura: numeroFacturaEntrada,
-refCaja: refCajaEntrada,
-  refTarro: refTarroEntrada,
-});
+    numeroRemisionFactura: numeroFacturaEntrada,
+
+    refCaja: refCajaEntrada,
+
+    refTarro: refTarroEntrada,
+  }
+);
 
       setMostrarModalEntrada(false);
 
@@ -944,6 +954,23 @@ Vence en ${dias} días
     />
   </div>
 
+<div className="mb-3">
+  <label className="form-label fw-bold">
+    Precio Compra Unidad
+  </label>
+
+  <input
+    type="number"
+    min="0"
+    className="form-control"
+    value={precioEntrada}
+    onChange={(e) =>
+      setPrecioEntrada(e.target.value)
+    }
+    placeholder="Ej: 55000"
+  />
+</div>
+        
   <hr />
 
   <h6 className="fw-bold mb-3">
