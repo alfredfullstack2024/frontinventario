@@ -114,31 +114,51 @@ export default function Movimientos() {
                         </span>
                       </td>
 
-                      <td>{mov.cantidad}</td>
+                    <td>
+  {mov.numeroLote || "-"}
+</td>
 
-                      <td>
-                        <span className="badge bg-secondary">
-                          {mov.stockAnterior}
-                          {" → "}
-                          {mov.stockNuevo}
-                        </span>
-                      </td>
+<td>
+  {mov.numeroRemisionFactura || "-"}
+</td>
 
-                      <td>
-                        <div>
-                          <strong>{mov.motivo || "N/A"}</strong>
+<td>
+  {mov.fechaVencimiento
+    ? new Date(
+        mov.fechaVencimiento
+      ).toLocaleDateString("es-CO")
+    : "-"}
+</td>
 
-                          {mov.observacion && (
-                            <div className="small text-muted">
-                              {mov.observacion}
-                            </div>
-                          )}
-                        </div>
-                      </td>
+<td>
+  {mov.cantidad}
+</td>
 
-                      <td>
-                        <small>{formatearFecha(mov.createdAt)}</small>
-                      </td>
+<td>
+  <span className="badge bg-secondary">
+    {mov.stockAnterior}
+    {" → "}
+    {mov.stockNuevo}
+  </span>
+</td>
+
+<td>
+  <div>
+    <strong>{mov.motivo || "-"}</strong>
+
+    {mov.observacion && (
+      <div className="small text-muted">
+        {mov.observacion}
+      </div>
+    )}
+  </div>
+</td>
+
+<td>
+  <small>
+    {formatearFecha(mov.createdAt)}
+  </small>
+</td>
                     </tr>
                   ))}
                 </tbody>
