@@ -418,7 +418,9 @@ const seleccionarLote = (loteId) => {
                           <td>
                             <div className="d-flex gap-2 flex-wrap">
                               {codigo.lotes?.length > 0 ? (
-                               codigo.lotes.map((lote) => {
+                               codigo.lotes
+  ?.filter((lote) => lote.stockDisponible > 0)
+  .map((lote) => {
 
   const dias = calcularDiasRestantes(
     lote.fechaVencimiento,
