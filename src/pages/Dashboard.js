@@ -51,8 +51,8 @@ export default function Dashboard() {
   <div
     className="bg-primary rounded p-2"
     style={{
-      width: "75px",
-      height: "75px",
+      width: "95px",
+      height: "95px",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
