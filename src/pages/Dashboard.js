@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import logoInventario from "./mar_cas.jpeg";
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -46,10 +47,34 @@ export default function Dashboard() {
       {/* Header */}
       <div className="row mb-5">
         <div className="col-12 text-center">
-          <h1 className="display-4 mb-3">
-            <span className="badge bg-primary">📦</span> Sistema de Inventario
-          </h1>
-          <p className="lead text-muted">
+    <div className="d-flex justify-content-center align-items-center gap-3 mb-3">
+  <div
+    className="bg-primary rounded p-2"
+    style={{
+      width: "75px",
+      height: "75px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <img
+      src={logoInventario}
+      alt="Logo Inventario"
+      style={{
+        width: "55px",
+        height: "55px",
+        objectFit: "contain",
+      }}
+    />
+  </div>
+
+  <h1 className="display-4 mb-0">
+    Sistema de Inventario
+  </h1>
+</div>      
+    
+    <p className="lead text-muted">
             Gestiona tu inventario con códigos de barras de manera profesional
           </p>
         </div>
