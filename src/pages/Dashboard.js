@@ -62,8 +62,8 @@ export default function Dashboard() {
       src={logoInventario}
       alt="Logo Inventario"
       style={{
-        width: "95px",
-        height: "95px",
+        width: "120px",
+        height: "120px",
         objectFit: "contain",
       }}
     />
