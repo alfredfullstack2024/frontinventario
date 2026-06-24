@@ -24,14 +24,16 @@ export default function Login() {
       });
 
       // Guardar token
-      localStorage.setItem("token", res.data.token);
+     localStorage.setItem("token", res.data.token);
 
-      // Guardar usuario
-      localStorage.setItem("usuario", JSON.stringify(res.data.usuario));
+localStorage.setItem(
+  "usuario",
+  JSON.stringify(res.data.usuario)
+);
 
-      alert("✅ Bienvenido");
+alert("✅ Bienvenido");
 
-      navigate("/");
+window.location.href = "/";
     } catch (error) {
       console.error(error);
 
