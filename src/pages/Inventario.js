@@ -1167,15 +1167,18 @@ Vence en ${dias} días
                   <div className="table-responsive">
                     <table className="table table-striped table-hover">
                       <thead className="table-dark">
-                        <tr>
-                          <th>Tipo</th>
-                          <th>Cantidad</th>
-                          <th>Stock</th>
-                          <th>Motivo</th>
-                          <th>Observación</th>
-                          <th>Fecha</th>
-                        </tr>
-                      </thead>
+  <tr>
+    <th>Tipo</th>
+    <th>Cantidad</th>
+    <th>Precio</th>
+    <th>Proveedor</th>
+    <th>Lote</th>
+    <th>Stock</th>
+    <th>Motivo</th>
+    <th>Observación</th>
+    <th>Fecha</th>
+  </tr>
+</thead>
 
                       <tbody>
                         {movimientosCodigo.map((mov) => (
@@ -1188,20 +1191,35 @@ Vence en ${dias} días
 
                             <td>{mov.cantidad}</td>
 
-                            <td>
-                              <span className="badge bg-secondary">
-                                {mov.stockAnterior}
-                                {" → "}
-                                {mov.stockNuevo}
-                              </span>
-                            </td>
-
-                            <td>{mov.motivo || "N/A"}</td>
-
-                           <td>{mov.observacion || "N/A"}</td>
-
+<td>
+  {mov.precioUnitario
+    ? `$${Number(mov.precioUnitario).toLocaleString("es-CO")}`
+    : "-"}
+</td>
 
 <td>
+  {mov.proveedor || "-"}
+</td>
+
+<td>
+  {mov.numeroLote || "-"}
+</td>
+
+<td>
+  <span className="badge bg-secondary">
+    {mov.stockAnterior}
+    {" → "}
+    {mov.stockNuevo}
+  </span>
+</td>
+
+<td>{mov.motivo || "-"}</td>
+
+<td>{mov.observacion || "-"}</td>
+
+<td>
+  <small>{formatearFecha(mov.createdAt)}</small>
+</td>
   <small>{formatearFecha(mov.createdAt)}</small>
 </td>
                           </tr>
