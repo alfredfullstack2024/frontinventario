@@ -31,6 +31,7 @@ const [cargandoLotes, setCargandoLotes] = useState(false);
 const [cargandoHistorial, setCargandoHistorial] = useState(false);
 const [mostrarDetalleModal, setMostrarDetalleModal] = useState(false);
   const [precioEntrada, setPrecioEntrada] = useState("");
+  const [proveedorEntrada, setProveedorEntrada] = useState("");
   const cargarCodigos = useCallback(async () => {
     try {
       setLoading(true);
@@ -104,6 +105,8 @@ const abrirModalSalida = (codigo) => {
   setRefTarroEntrada("");
 
   setPrecioEntrada("");
+
+    setProveedorEntrada("");
 
   setMostrarModalEntrada(true);
 };
@@ -253,6 +256,8 @@ const seleccionarLote = (loteId) => {
     refCaja: refCajaEntrada,
 
     refTarro: refTarroEntrada,
+
+    proveedor: proveedorEntrada,
   }
 );
 
@@ -972,7 +977,23 @@ Vence en ${dias} días
     placeholder="Ej: 55000"
   />
 </div>
-        
+
+<div className="mb-3">
+  <label className="form-label fw-bold">
+    Proveedor
+  </label>
+
+  <input
+    type="text"
+    className="form-control"
+    value={proveedorEntrada}
+    onChange={(e) =>
+      setProveedorEntrada(e.target.value)
+    }
+    placeholder="Ej: Distribuidora Médica SAS"
+  />
+</div>
+      
   <hr />
 
   <h6 className="fw-bold mb-3">
