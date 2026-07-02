@@ -1220,8 +1220,7 @@ Vence en ${dias} días
 <td>
   <small>{formatearFecha(mov.createdAt)}</small>
 </td>
-  <small>{formatearFecha(mov.createdAt)}</small>
-</td>
+
                           </tr>
                         ))}
                       </tbody>
