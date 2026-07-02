@@ -22,6 +22,7 @@ export default function AsignarProductos() {
   const [referencia, setReferencia] = useState("");
   const [presentacion, setPresentacion] = useState("");
   const [marcaFabricante, setMarcaFabricante] = useState("");
+  const [proveedor, setProveedor] = useState("");
   const [registroInvima, setRegistroInvima] = useState("");
   const [clasificacionRiesgo, setClasificacionRiesgo] = useState("");
 
@@ -173,6 +174,7 @@ if (!diasAlertaAmarillo || !diasAlertaRojo) {
         referencia,
         presentacion,
         marcaFabricante,
+        proveedor,
         registroInvima,
         clasificacionRiesgo,
 
@@ -204,6 +206,7 @@ diasAlertaRojo: parseInt(
   referencia,
   presentacion,
   marcaFabricante,
+        proveedor,
   registroInvima,
   clasificacionRiesgo,
 
@@ -254,6 +257,7 @@ diasAlertaRojo: parseInt(
     setReferencia("");
     setPresentacion("");
     setMarcaFabricante("");
+    setProveedor("");
     setRegistroInvima("");
     setClasificacionRiesgo("");
 
@@ -534,7 +538,23 @@ setDiasAlertaRojo("");
                                   }
                                 />
                               </div>
+                              <div className="mb-3">
+  <label className="form-label fw-bold">
+    Proveedor
+  </label>
 
+  <input
+    type="text"
+    className="form-control"
+    value={proveedor}
+    onChange={(e) =>
+      setProveedor(e.target.value)
+    }
+    placeholder="Nombre del proveedor"
+  />
+</div>
+
+                                    
                               <div className="mb-3">
                                 <label className="form-label fw-bold">
                                   Registro INVIMA
